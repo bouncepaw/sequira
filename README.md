@@ -1,0 +1,2 @@
+# sequira
+Ergonomic keyboard
