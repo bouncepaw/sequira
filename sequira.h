@@ -61,7 +61,7 @@
  * layer this key triggers when held, and SYM is a keycode that is sent when the
  * key is simply tapped.
  */
-enum customkeys
+enum custom_key
   {
    FUL_C_x = SAFE_RANGE, // Ctrl+x
    CMD_C_q, // Ctrl+q

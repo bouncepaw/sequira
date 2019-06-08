@@ -63,12 +63,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
    },
   };
 
+
+layer_state_t get_full_moon(void) {
+  return (layer_state & (1 << CYRILLIC))
+    ? CYRILLIC_FULL_MOON
+    : LATIN_FULL_MOON;
+}
+
 enum mod_router_directive
   {
    dREG,   // register
    dUNREG, // unregister
   };
-void mod_router(uint8_t modmask, enum mod_router_directive) {
+void mod_router(enum mod_router_directive, uint8_t modmask) {
   static bool any_mods_active = false;
   static bool was_cyrillic_active = false;
   static bool was_cyrillic_full_moon_active = false;
@@ -89,16 +96,106 @@ void mod_router(uint8_t modmask, enum mod_router_directive) {
     // Depress the mod.
     unregister_mods(modmask);
     // If it was the last mod, rewind to previous state.
-    if (!get_mods()) {
+    if (!(get_mods() &~ (MOD_BIT(LSHIFT) | MOD_BIT(RSHIFT)))) {
       any_mods_active = false;
       if (was_cyrillic_active) layer_on(CYRILLIC);
       if (was_cyrillic_full_moon_active) layer_on(CYRILLIC_FULL_MOON);
     }
   }
 }
+#define KEYTIMER(name) static uint16_t timer_##name
+
+void process_custom_mod(enum custom_key ck,
+                        uint8_t *timer,
+                        keyrecord_t *record,
+                        uint8_t modmask_for_hold,
+                        uint8_t modmask_for_kc,
+                        uint8_t kc) {
+  if (record->event.pressed) {
+    *timer = timer_read();
+    mod_router(dREG, modmask_for_hold);
+  }
+  else {
+    mod_router(dUNREG, modmask_for_hold);
+    if (timer_elapsed(*timer) < MODTAP_TERM) {
+      register_mods(modmask_for_kc);
+      tap_code(kc);
+      unregister_mods(modmask_for_kc);
+    }
+  }
+}
+#define MOD_
+#define KEYMOD(name, modhold, modpress, kc)                     \
+  case name:                                                    \
+  process_custom_mod(name, &timer_##name, record,               \
+                     MOD_##modhold, MOD_##modpress, KC_##kc);   \
+  return false
+
+void process_custom_layer(enum custom_key ck,
+                          uint8_t *timer,
+                          keyrecord_t *record,
+                          layer_state_t layer,
+                          uint8_t modmask_for_kc,
+                          uint8_t kc) {
+  if (record->event.pressed) {
+    *timer = timer_read();
+    layer_on(layer);
+  }
+  else {
+    layer_off(layer);
+    if (timer_elapsed(*timer) < MODTAP_TERM) {
+      register_mods(modmask_for_kc);
+      tap_code(kc);
+      unregister_mods(modmask_for_kc);
+    }
+  }
+}
+
+#define KEYLAYER(name, layer, modpress, kc, act)    \
+  case name:                                        \
+  process_custom_layer(name, &timer_##name, record, \
+                       layer, modpress, kc);        \
+  act;                                              \
+  return false
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  KEYTIMER(FUL_C_x);
+  KEYTIMER(CMD_C_q);
+  KEYTIMER(ALT_TAB);
+  KEYTIMER(SFT_BSP);
+  KEYTIMER(CTL_SPC);
+  KEYTIMER(CMD_ESC);
+  KEYTIMER(ALT_DEL);
+  KEYTIMER(NEW_M_x);
+  KEYTIMER(FUL_RET);
+  KEYTIMER(NEW_LNG);
+
   switch (keycode) {
+
+    /*
+     * Simple double keys. They trigger the LATIN layer and a mod when
+     * held, and send smth when tapped.
+     *     key      mod   smth
+     */
+    KEYMOD(CMD_C_q, LGUI, LCTL, Q);
+    KEYMOD(ALT_TAB, LALT,     , TAB);
+    KEYMOD(CTL_SPC, RCTL,     , SPC);
+    KEYMOD(CMD_ESC, RGUI,     , ESC);
+    KEYMOD(ALT_DEL, RALT,     , DEL);
+
+    /*
+     * New Moon double keys. They trigger NEW_MOON layer when held,
+     * and send smth when tapped.
+     */
+    KEYLAYER(NEW_M_x, NEW_MOON, LALT, X,);
+    KEYLAYER(NEW_LNG, NEW_MOON,     , KC_F19, layer_state ^= (1 << CYRILLIC));
+
+    /*
+     * Full Moon double keys. They trigger a corresponding _FULL_MOON
+     * layer when held, and send smth when tapped.
+     */
+    KEYLAYER(FUL_C_x, get_full_moon(), LCTL, X,);
+    KEYLAYER(FUL_RET, get_full_moon(),     , ENT,);
   default:
     return true;
   }
