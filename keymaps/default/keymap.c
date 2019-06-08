@@ -33,8 +33,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
           KC_F14,  KC_F11,  KC_F1,   KC_F2,   KC_F3,   KC_F17),
 
     HALFR(KC_TRNS, KC_HOME, KC_UP,   KC_END,  KC_PGUP, KC_INS,
-          LCTL_C,  KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, KC_TRNS,
-          LCTL_S,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+          LCTL(KC_C),  KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, KC_TRNS,
+          LCTL(KC_S),  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
           LSFT(KC_PSCR)),
    },
 
@@ -75,12 +75,12 @@ enum mod_router_directive
    dREG,   // register
    dUNREG, // unregister
   };
-void mod_router(enum mod_router_directive, uint8_t modmask) {
+void mod_router(enum mod_router_directive directive, uint8_t modmask) {
   static bool any_mods_active = false;
   static bool was_cyrillic_active = false;
   static bool was_cyrillic_full_moon_active = false;
 
-  if (mod_router_directive == dREG) {
+  if (directive == dREG) {
     // If it the first mod pressed.
     if (!any_mods_active) {
       any_mods_active = true;
@@ -96,7 +96,7 @@ void mod_router(enum mod_router_directive, uint8_t modmask) {
     // Depress the mod.
     unregister_mods(modmask);
     // If it was the last mod, rewind to previous state.
-    if (!(get_mods() &~ (MOD_BIT(LSHIFT) | MOD_BIT(RSHIFT)))) {
+    if (!(get_mods() &~ (MOD_LSFT | MOD_RSFT))) {
       any_mods_active = false;
       if (was_cyrillic_active) layer_on(CYRILLIC);
       if (was_cyrillic_full_moon_active) layer_on(CYRILLIC_FULL_MOON);
@@ -106,7 +106,7 @@ void mod_router(enum mod_router_directive, uint8_t modmask) {
 #define KEYTIMER(name) static uint16_t timer_##name
 
 void process_custom_mod(enum custom_key ck,
-                        uint8_t *timer,
+                        uint16_t *timer,
                         keyrecord_t *record,
                         uint8_t modmask_for_hold,
                         uint8_t modmask_for_kc,
@@ -124,19 +124,19 @@ void process_custom_mod(enum custom_key ck,
     }
   }
 }
-#define MOD_
+#define MOD__ 0
 #define KEYMOD(name, modhold, modpress, kc)                     \
   case name:                                                    \
-  process_custom_mod(name, &timer_##name, record,               \
+  process_custom_mod(name, &timer_##name, record,              \
                      MOD_##modhold, MOD_##modpress, KC_##kc);   \
   return false
 
 void process_custom_layer(enum custom_key ck,
-                          uint8_t *timer,
+                          uint16_t *timer,
                           keyrecord_t *record,
                           layer_state_t layer,
                           uint8_t modmask_for_kc,
-                          uint8_t kc) {
+                          uint16_t kc) {
   if (record->event.pressed) {
     *timer = timer_read();
     layer_on(layer);
@@ -153,8 +153,8 @@ void process_custom_layer(enum custom_key ck,
 
 #define KEYLAYER(name, layer, modpress, kc, act)    \
   case name:                                        \
-  process_custom_layer(name, &timer_##name, record, \
-                       layer, modpress, kc);        \
+  process_custom_layer(name, &timer_##name, record,           \
+                       layer, MOD_##modpress, KC_##kc);        \
   act;                                              \
   return false
 
@@ -162,7 +162,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   KEYTIMER(FUL_C_x);
   KEYTIMER(CMD_C_q);
   KEYTIMER(ALT_TAB);
-  KEYTIMER(SFT_BSP);
+  //KEYTIMER(SFT_BSP);
   KEYTIMER(CTL_SPC);
   KEYTIMER(CMD_ESC);
   KEYTIMER(ALT_DEL);
@@ -178,24 +178,24 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
      *     key      mod   smth
      */
     KEYMOD(CMD_C_q, LGUI, LCTL, Q);
-    KEYMOD(ALT_TAB, LALT,     , TAB);
-    KEYMOD(CTL_SPC, RCTL,     , SPC);
-    KEYMOD(CMD_ESC, RGUI,     , ESC);
-    KEYMOD(ALT_DEL, RALT,     , DEL);
+    KEYMOD(ALT_TAB, LALT, _   , TAB);
+    KEYMOD(CTL_SPC, RCTL, _   , SPC);
+    KEYMOD(CMD_ESC, RGUI, _   , ESC);
+    KEYMOD(ALT_DEL, RALT, _   , DEL);
 
     /*
      * New Moon double keys. They trigger NEW_MOON layer when held,
      * and send smth when tapped.
      */
     KEYLAYER(NEW_M_x, NEW_MOON, LALT, X,);
-    KEYLAYER(NEW_LNG, NEW_MOON,     , KC_F19, layer_state ^= (1 << CYRILLIC));
+    KEYLAYER(NEW_LNG, NEW_MOON, _   , F19, layer_state ^= (1 << CYRILLIC));
 
     /*
      * Full Moon double keys. They trigger a corresponding _FULL_MOON
      * layer when held, and send smth when tapped.
      */
     KEYLAYER(FUL_C_x, get_full_moon(), LCTL, X,);
-    KEYLAYER(FUL_RET, get_full_moon(),     , ENT,);
+    KEYLAYER(FUL_RET, get_full_moon(), _   , ENT,);
   default:
     return true;
   }

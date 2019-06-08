@@ -1,3 +1,4 @@
+#!/bin/sh
 QMK_SRC=~/src/qmk_firmware/keyboards
 SQR_SRC=~/src/sequira
 
