@@ -90,11 +90,11 @@ void mod_router(enum mod_router_directive directive, uint8_t modmask) {
       layer_off(CYRILLIC_FULL_MOON);
     }
     // Anyway, the pressed mod shall be registered.
-    register_mods(modmask);
+    register_code(modmask);
   }
   else {
     // Depress the mod.
-    unregister_mods(modmask);
+    unregister_code(modmask);
     // If it was the last mod, rewind to previous state.
     if (!(get_mods() &~ (MOD_LSFT | MOD_RSFT))) {
       any_mods_active = false;
@@ -118,17 +118,18 @@ void process_custom_mod(enum custom_key ck,
   else {
     mod_router(dUNREG, modmask_for_hold);
     if (timer_elapsed(*timer) < MODTAP_TERM) {
-      register_mods(modmask_for_kc);
+      register_code(modmask_for_kc);
       tap_code(kc);
-      unregister_mods(modmask_for_kc);
+      unregister_code(modmask_for_kc);
     }
   }
 }
 #define MOD__ 0
+#define KC__ 0
 #define KEYMOD(name, modhold, modpress, kc)                     \
   case name:                                                    \
   process_custom_mod(name, &timer_##name, record,              \
-                     MOD_##modhold, MOD_##modpress, KC_##kc);   \
+                     KC_##modhold, KC_##modpress, KC_##kc);   \
   return false
 
 void process_custom_layer(enum custom_key ck,
@@ -144,9 +145,9 @@ void process_custom_layer(enum custom_key ck,
   else {
     layer_off(layer);
     if (timer_elapsed(*timer) < MODTAP_TERM) {
-      register_mods(modmask_for_kc);
+      register_code(modmask_for_kc);
       tap_code(kc);
-      unregister_mods(modmask_for_kc);
+      unregister_code(modmask_for_kc);
     }
   }
 }
@@ -154,7 +155,7 @@ void process_custom_layer(enum custom_key ck,
 #define KEYLAYER(name, layer, modpress, kc, act)    \
   case name:                                        \
   process_custom_layer(name, &timer_##name, record,           \
-                       layer, MOD_##modpress, KC_##kc);        \
+                       layer, KC_##modpress, KC_##kc);        \
   act;                                              \
   return false
 
@@ -162,7 +163,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   KEYTIMER(FUL_C_x);
   KEYTIMER(CMD_C_q);
   KEYTIMER(ALT_TAB);
-  //KEYTIMER(SFT_BSP);
   KEYTIMER(CTL_SPC);
   KEYTIMER(CMD_ESC);
   KEYTIMER(ALT_DEL);

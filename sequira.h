@@ -79,7 +79,7 @@ enum custom_key
 #define HYT_CTL KC_LCTL
 #define HYT_SFT KC_RSFT
 #define COMPOSE KC_F20
-
+#define SFT_BSP MT(MOD_LSFT, KC_BSPC)
 /*
  * These macros simplify specifying halves of layout. There is no need for macro
  * that defines the whole keyboard.
