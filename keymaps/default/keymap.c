@@ -10,7 +10,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
 
     HALFR(KC_QUOT, KC_W,    KC_L,    KC_J,    KC_P,    KC_BSLS,
           KC_DOT,  KC_A,    KC_O,    KC_I,    KC_N,    FUL_RET,
-          K_C_SCLN,KC_Y,    KC_B,    KC_V,    KC_G,    SUN_KET,
+          KC_SCLN,KC_Y,    KC_B,    KC_V,    KC_G,    SUN_KET,
           KC_PSCR),
    },
 
@@ -22,7 +22,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
 
     HALFR(K_C_NUM, K_C_JA,  K_C_L,   K_C_J,   K_C_P,   KC_BSLS,
           K_C_DOT, K_C_A,   K_C_O,   K_C_I,   K_C_N,   FUL_RET,
-          KC_SCLN, K_C_Y,   K_C_B,   K_C_H,   K_C_G,   SUN_KET,
+          K_C_SCLN, K_C_Y,   K_C_B,   K_C_H,   K_C_G,   SUN_KET,
           KC_PSCR),
    },
 
@@ -198,5 +198,92 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     KEYLAYER(FUL_RET, get_full_moon(), _   , ENT,);
   default:
     return true;
+  }
+}
+
+enum custom_combo
+  {
+   cZ_or_TS,
+   cQ_or_SH,
+   c_or_F,
+   c_or_JO,
+   c_or_E,
+   c_or_JU,
+   c_or_ZH,
+   c_or_SHCH,
+   c_or_HARD,
+   c_quote,
+   c_dash,
+  };
+
+#define c_def(name, key1, key2) \
+  const uint16_t PROGMEM combo_##name[] = {KC_##key1, KC_##key2, COMBO_END}
+#define c_use(name) \
+  [c##name] = COMBO_ACTION(combo_##name)
+#define c_cyrlat(lat, cyr)                \
+  case c##lat##_or_##cyr:                                \
+  if (pressed) {                                \
+    if (layer_state & (1 << CYRILLIC))          \
+      tap_code16(K_C_##cyr);                    \
+    else                                        \
+      tap_code16(KC_##lat);                       \
+  }                                             \
+  break
+#define c_cyr(cyr)                            \
+  case c_or_##cyr:                                    \
+  if (pressed && (layer_state & (1 << CYRILLIC)))   \
+    tap_code16(K_C_##cyr);                          \
+  break
+#define c_complex(name, act)                    \
+  case c##name:                                \
+  if (pressed) {                                \
+    act;                                        \
+  }                                             \
+  break
+
+c_def(Z_or_TS,   D, U);
+c_def(Q_or_SH,   R, F);
+c_def(_or_F,     H, S);
+c_def(_or_JO,    T, E);
+c_def(_or_E,     W, L);
+c_def(_or_JU,    J, P);
+c_def(_or_ZH,    A, O);
+c_def(_or_SHCH,  I, N);
+c_def(_or_HARD,  V, G);
+c_def(_quote,    M, C);
+c_def(_dash,     Y, B);
+combo_t key_combos[COMBO_COUNT] =
+  {
+   c_use(Z_or_TS),
+   c_use(Q_or_SH),
+   c_use(_or_F),
+   c_use(_or_JO),
+   c_use(_or_E),
+   c_use(_or_JU),
+   c_use(_or_ZH),
+   c_use(_or_SHCH),
+   c_use(_or_HARD),
+   c_use(_quote),
+   c_use(_dash),
+  };
+
+void process_combo_event(uint8_t combo_index, bool pressed) {
+  switch (combo_index) {
+    c_cyrlat(Z, TS);
+    c_cyrlat(Q, SH);
+    c_cyr(F);
+    c_cyr(JO);
+    c_cyr(E);
+    c_cyr(JU);
+    c_cyr(ZH);
+    c_cyr(SHCH);
+    c_cyr(HARD);
+    c_complex(_quote, {
+        register_code(KC_RALT); tap_code(KC_RBRC); unregister_code(KC_RALT);
+      });
+    c_complex(_dash, {
+        register_code(KC_RALT); tap_code(KC_MINS); unregister_code(KC_RALT);
+      });
+
   }
 }

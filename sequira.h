@@ -73,13 +73,13 @@ enum custom_key
    NEW_M_x, // Alt+x
    NEW_LNG, // f19
    FUL_RET,
-   SUN_BRA, // (
-   SUN_KET, // )
   };
 #define HYT_CTL KC_LCTL
 #define HYT_SFT KC_RSFT
 #define COMPOSE KC_F20
 #define SFT_BSP MT(MOD_LSFT, KC_BSPC)
+#define SUN_BRA LT(SUN, KC_LPRN)
+#define SUN_KET LT(SUN, KC_RPRN)
 /*
  * These macros simplify specifying halves of layout. There is no need for macro
  * that defines the whole keyboard.
