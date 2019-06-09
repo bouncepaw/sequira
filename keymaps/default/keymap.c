@@ -203,7 +203,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 enum custom_combo
   {
-   cZ_or_TS,
+   cX_or_TS,
    cQ_or_SH,
    c_or_F,
    c_or_JO,
@@ -241,7 +241,11 @@ enum custom_combo
   }                                             \
   break
 
-c_def(Z_or_TS,   D, U);
+
+
+
+
+c_def(X_or_TS,   D, U);
 c_def(Q_or_SH,   R, F);
 c_def(_or_F,     H, S);
 c_def(_or_JO,    T, E);
@@ -254,7 +258,7 @@ c_def(_quote,    M, C);
 c_def(_dash,     Y, B);
 combo_t key_combos[COMBO_COUNT] =
   {
-   c_use(Z_or_TS),
+   c_use(X_or_TS),
    c_use(Q_or_SH),
    c_use(_or_F),
    c_use(_or_JO),
@@ -269,7 +273,7 @@ combo_t key_combos[COMBO_COUNT] =
 
 void process_combo_event(uint8_t combo_index, bool pressed) {
   switch (combo_index) {
-    c_cyrlat(Z, TS);
+    c_cyrlat(X, TS);
     c_cyrlat(Q, SH);
     c_cyr(F);
     c_cyr(JO);
