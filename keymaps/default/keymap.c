@@ -10,7 +10,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
 
     HALFR(KC_QUOT, KC_W,    KC_L,    KC_J,    KC_P,    KC_BSLS,
           KC_DOT,  KC_A,    KC_O,    KC_I,    KC_N,    FUL_RET,
-          KC_SCLN,KC_Y,    KC_B,    KC_V,    KC_G,    SUN_KET,
+          KC_SCLN, KC_Y,    KC_B,    KC_V,    KC_G,    SUN_KET,
           KC_PSCR),
    },
 
@@ -22,7 +22,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
 
     HALFR(K_C_NUM, K_C_JA,  K_C_L,   K_C_J,   K_C_P,   KC_BSLS,
           K_C_DOT, K_C_A,   K_C_O,   K_C_I,   K_C_N,   FUL_RET,
-          K_C_SCLN, K_C_Y,   K_C_B,   K_C_H,   K_C_G,   SUN_KET,
+          K_C_SCLN, K_C_Y,  K_C_B,   K_C_H,   K_C_G,   SUN_KET,
           KC_PSCR),
    },
 
@@ -137,7 +137,8 @@ void process_custom_layer(enum custom_key ck,
                           keyrecord_t *record,
                           layer_state_t layer,
                           uint8_t modmask_for_kc,
-                          uint16_t kc) {
+                          uint16_t kc,
+                          bool should_invert) {
   if (record->event.pressed) {
     *timer = timer_read();
     layer_on(layer);
@@ -148,15 +149,17 @@ void process_custom_layer(enum custom_key ck,
       register_code(modmask_for_kc);
       tap_code(kc);
       unregister_code(modmask_for_kc);
+      if (should_invert)
+        layer_invert(CYRILLIC);
     }
   }
 }
 
-#define KEYLAYER(name, layer, modpress, kc, act)    \
-  case name:                                        \
+#define KEYLAYER(name, layer, modpress, kc, si)         \
+  case name: {                                               \
   process_custom_layer(name, &timer_##name, record,           \
-                       layer, KC_##modpress, KC_##kc);        \
-  act;                                              \
+                       layer, KC_##modpress, KC_##kc, si);       \
+  }\
   return false
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -187,15 +190,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
      * New Moon double keys. They trigger NEW_MOON layer when held,
      * and send smth when tapped.
      */
-    KEYLAYER(NEW_M_x, NEW_MOON, LALT, X,);
-    KEYLAYER(NEW_LNG, NEW_MOON, _   , F19, layer_state ^= (1 << CYRILLIC));
+    KEYLAYER(NEW_M_x, NEW_MOON, LALT, X,   false);
+    KEYLAYER(NEW_LNG, NEW_MOON, _   , F19, true);
 
     /*
      * Full Moon double keys. They trigger a corresponding _FULL_MOON
      * layer when held, and send smth when tapped.
      */
-    KEYLAYER(FUL_C_x, get_full_moon(), LCTL, X,);
-    KEYLAYER(FUL_RET, get_full_moon(), _   , ENT,);
+    KEYLAYER(FUL_C_x, get_full_moon(), LCTL, X,   false);
+    KEYLAYER(FUL_RET, get_full_moon(), _   , ENT, false);
   default:
     return true;
   }
