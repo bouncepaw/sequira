@@ -206,91 +206,89 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 enum custom_combo
   {
-   cX_or_TS,
-   cQ_or_SH,
-   c_or_F,
-   c_or_JO,
-   c_or_E,
-   c_or_JU,
-   c_or_ZH,
-   c_or_SHCH,
-   c_or_HARD,
-   c_quote,
-   c_dash,
+   clX, clQ, clQuote, clDash,
+   ccTS, ccSH, ccF, ccJO, ccE,
+   ccJU, ccZH, ccSHCH, ccHARD,
+   ccQuote, ccDash,
   };
+#define cl_def(name, key1, key2) \
+  const uint16_t PROGMEM cld##name[] = {KC_##key1, KC_##key2, COMBO_END}
+#define cc_def(name, key1, key2)\
+  const uint16_t PROGMEM ccd##name[] = {K_C_##key1, K_C_##key2, COMBO_END};
+cl_def(X,     D, U);
+cl_def(Q,     R, F);
+cl_def(Quote, M, C);
+cl_def(Dash,  Y, B);
 
-#define c_def(name, key1, key2) \
-  const uint16_t PROGMEM combo_##name[] = {KC_##key1, KC_##key2, COMBO_END}
-#define c_use(name) \
-  [c##name] = COMBO_ACTION(combo_##name)
-#define c_cyrlat(lat, cyr)                \
-  case c##lat##_or_##cyr:                                \
-  if (pressed) {                                \
-    if (layer_state & (1 << CYRILLIC))          \
-      tap_code16(K_C_##cyr);                    \
-    else                                        \
-      tap_code16(KC_##lat);                       \
-  }                                             \
-  break
-#define c_cyr(cyr)                            \
-  case c_or_##cyr:                                    \
-  if (pressed && (layer_state & (1 << CYRILLIC)))   \
-    tap_code16(K_C_##cyr);                          \
-  break
-#define c_complex(name, act)                    \
-  case c##name:                                \
-  if (pressed) {                                \
-    act;                                        \
-  }                                             \
-  break
+cc_def(TS,    D, U);
+cc_def(SH,    R, SOFT);
+cc_def(F,     V, S);
+cc_def(JO,    T, JE);
+cc_def(E,     JA, L);
+cc_def(JU,    J, P);
+cc_def(ZH,    A, O);
+cc_def(SHCH,  I, N);
+cc_def(HARD,  H, G);
+cc_def(Quote, M, K);
+cc_def(Dash,  Y, B);
 
-
-
-
-
-c_def(X_or_TS,   D, U);
-c_def(Q_or_SH,   R, F);
-c_def(_or_F,     H, S);
-c_def(_or_JO,    T, E);
-c_def(_or_E,     W, L);
-c_def(_or_JU,    J, P);
-c_def(_or_ZH,    A, O);
-c_def(_or_SHCH,  I, N);
-c_def(_or_HARD,  V, G);
-c_def(_quote,    M, C);
-c_def(_dash,     Y, B);
+#define cl_use(name) [cl##name] = COMBO_ACTION(cld##name)
+#define cc_use(name) [cc##name] = COMBO_ACTION(ccd##name)
 combo_t key_combos[COMBO_COUNT] =
   {
-   c_use(X_or_TS),
-   c_use(Q_or_SH),
-   c_use(_or_F),
-   c_use(_or_JO),
-   c_use(_or_E),
-   c_use(_or_JU),
-   c_use(_or_ZH),
-   c_use(_or_SHCH),
-   c_use(_or_HARD),
-   c_use(_quote),
-   c_use(_dash),
+   cl_use(X), cl_use(Q), cl_use(Quote), cl_use(Dash),
+   cc_use(TS), cc_use(SH), cc_use(F), cc_use(JO), cc_use(E),
+   cc_use(JU), cc_use(ZH), cc_use(SHCH), cc_use(HARD),
+   cc_use(Quote), cc_use(Dash),
   };
 
-void process_combo_event(uint8_t combo_index, bool pressed) {
-  switch (combo_index) {
-    c_cyrlat(X, TS);
-    c_cyrlat(Q, SH);
-    c_cyr(F);
-    c_cyr(JO);
-    c_cyr(E);
-    c_cyr(JU);
-    c_cyr(ZH);
-    c_cyr(SHCH);
-    c_cyr(HARD);
-    c_complex(_quote, {
-        register_code(KC_RALT); tap_code(KC_RBRC); unregister_code(KC_RALT);
-      });
-    c_complex(_dash, {
-        register_code(KC_RALT); tap_code(KC_MINS); unregister_code(KC_RALT);
-      });
+#define cc_match(name) \
+  case cc##name:\
+  tap_code(K_C_##name);\
+  break
 
-  }
+#define cl_match(name)\
+  case cl##name:\
+  tap_code(KC_##name);\
+  break
+
+void process_combo_event(uint8_t combo_index, bool pressed) {
+  if (!pressed) return;
+  if (layer_state & (1 << CYRILLIC))
+    switch (combo_index) {
+      cc_match(TS);
+      cc_match(SH);
+      cc_match(F);
+      cc_match(JO);
+      cc_match(E);
+      cc_match(ZH);
+      cc_match(JU);
+      cc_match(SHCH);
+      cc_match(HARD);
+    case ccQuote:
+      register_code(KC_RALT);
+      tap_code(KC_RBRC);
+      unregister_code(KC_RALT);
+      break;
+    case ccDash:
+      register_code(KC_RALT);
+      tap_code(KC_MINS);
+      unregister_code(KC_RALT);
+      break;
+    }
+  else
+    switch (combo_index) {
+      cl_match(Q);
+      cl_match(X);
+    case clQuote:
+      register_code(KC_RALT);
+      tap_code(KC_RBRC);
+      unregister_code(KC_RALT);
+      break;
+    case clDash:
+      register_code(KC_RALT);
+      tap_code(KC_MINS);
+      unregister_code(KC_RALT);
+      break;
+    }
 }

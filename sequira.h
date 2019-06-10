@@ -13,7 +13,7 @@
 #define K_C_G KC_U
 #define K_C_D KC_L
 #define K_C_JE KC_T
-#define K_C_JO KC_GRV
+#define K_C_JO KC_NUBS
 #define K_C_ZH KC_SCLN
 #define K_C_Z KC_P
 #define K_C_I KC_B

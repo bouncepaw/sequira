@@ -34,7 +34,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MATRIX_COLS 6
 
 #define TAPPING_TERM 300
-#define MODTAP_TERM 500
+#define MODTAP_TERM 300
 
 // wiring of each half
 #define MATRIX_ROW_PINS { F7, B1, B3, B2, C6, D7, E6, B4 }
@@ -52,6 +52,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define LOCKING_RESYNC_ENABLE
 
 
-#define COMBO_COUNT 11
+#define COMBO_COUNT 15
 
 #endif
