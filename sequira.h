@@ -73,8 +73,8 @@
  *
  * |key    |[1]      |[2]    |[3]           |[4]|
  * |-------|---------|-------|--------------|---|
- * |NEW_BRA|NEW_MOON |(      |              |√  |
- * |FUL_KET|FULL_MOON|)      |              |√  |
+ * |NEW_BRA|NEW_MOON |(      |Bra-          |√  |
+ * |FUL_KET|FULL_MOON|)      |   cket       |√  |
  * |CYR_LAT|         |KC_F19 |Inverts layout|√  |
  * |LCMD   |LGUI     |       |              |√  |
  * |ALT_TAB|LALT     |KC_TAB |              |√  |
@@ -106,7 +106,6 @@ enum custom_key
 /*
  * These macros simplify specifying halves of layout. There is no need for macro
  * that defines the whole keyboard.
- * TODO: redo for the new layout.
  */
 #define HALF(k10, k11, k12, k13, k14, k15, \
              k20, k21, k22, k23, k24, k25, \
@@ -117,18 +116,18 @@ enum custom_key
     { k30, k31, k32, k33, k34, k35 },      \
     { k40, k41, k42, k43, k44, k45 }
 
-#define HALFL(k10, k11, k12, k13, k14, k15,                     \
-              k20, k21, k22, k23, k24, k25,                     \
-              k30, k31, k32, k33, k34, k35)                     \
-HALF(k10, k11, k12, k13, k14, k15,                              \
-     k20, k21, k22, k23, k24, k25,                              \
-     k30, k31, k32, k33, k34, k35,                              \
-     FUL_C_x, HYT_CTL, COMPOSE, CMD_C_q, ALT_TAB, SFT_BSP)
+#define HALFL(k11, k12, k13, k14                                      \
+              k21, k22, k23, k24,                                     \
+              k31, k32, k33, k34, k25)                                \
+HALF(KC_ESC,  k11,     k12,     k13,  k14,     LCTL(KC_Q),            \
+     CYR_LAT, k21,     k22,     k23,  k24,     k25,                   \
+     NEW_BRA, k31,     k32,     k33,  k34,     KC_MINS,               \
+     FUL_MUN, HYT_CTL, COMPOSE, LCMD, ALT_TAB, SFT_BSP)
 
-#define HALFR(k10, k11, k12, k13, k14, k15,             \
-              k20, k21, k22, k23, k24, k25,             \
-              k30, k31, k32, k33, k34, k35, k43)        \
-HALF(k10, k11, k12, k13, k14, k15,                      \
-     k20, k21, k22, k23, k24, k25,                      \
-     k30, k31, k32, k33, k34, k35,                      \
-     CTL_SPC, CMD_ESC, ALT_DEL, k43, HYT_SFT, NEW_M_x)
+#define HALFR(k11, k12, k13, k14,                                    \
+              k21, k22, k23, k24,                                    \
+              k31, k32, k33, k34, k20, k30)                          \
+HALF(LALT(KC_X), k11,     k12,  k13,   k14,     LCTL(KC_X),          \
+     k20,        k21,     k22,  k23,   k24,     k25,                 \
+     k30,        k31,     k32,  k33,   k34,     k35,                 \
+     CTL_SPC,    CMD_DEL, ROPT, PHOTO, HYT_SFT, NEW_MUN)
