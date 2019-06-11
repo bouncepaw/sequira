@@ -49,30 +49,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
   };
 
 
-layer_state_t get_full_moon(void) {
-  return (layer_state & (1 << CYRILLIC))
-    ? CYRILLIC_FULL_MOON
-    : LATIN_FULL_MOON;
-}
-
-enum mod_router_directive
-  {
-   dREG,   // register
-   dUNREG, // unregister
-  };
-void mod_router(enum mod_router_directive directive, uint8_t modmask) {
+void mod_router(bool registering, uint8_t modmask) {
   static bool any_mods_active = false;
   static bool was_cyrillic_active = false;
-  static bool was_cyrillic_full_moon_active = false;
 
-  if (directive == dREG) {
+  if (registering) {
     // If it the first mod pressed.
     if (!any_mods_active) {
       any_mods_active = true;
       was_cyrillic_active = layer_state & (1 << CYRILLIC);
-      was_cyrillic_full_moon_active = layer_state & (1 << CYRILLIC_FULL_MOON);
       layer_off(CYRILLIC);
-      layer_off(CYRILLIC_FULL_MOON);
     }
     // Anyway, the pressed mod shall be registered.
     register_code(modmask);
@@ -84,7 +70,6 @@ void mod_router(enum mod_router_directive directive, uint8_t modmask) {
     if (!(get_mods() &~ (MOD_LSFT | MOD_RSFT))) {
       any_mods_active = false;
       if (was_cyrillic_active) layer_on(CYRILLIC);
-      if (was_cyrillic_full_moon_active) layer_on(CYRILLIC_FULL_MOON);
     }
   }
 }
@@ -98,10 +83,10 @@ void process_custom_mod(enum custom_key ck,
                         uint8_t kc) {
   if (record->event.pressed) {
     *timer = timer_read();
-    mod_router(dREG, modmask_for_hold);
+    mod_router(true, modmask_for_hold);
   }
   else {
-    mod_router(dUNREG, modmask_for_hold);
+    mod_router(false, modmask_for_hold);
     if (timer_elapsed(*timer) < MODTAP_TERM) {
       register_code(modmask_for_kc);
       tap_code(kc);
