@@ -1,6 +1,10 @@
 Sequira
 ===
 
+![](sequira.jpg)
+
 Keyboard Maintainer: bouncepaw
-Hardware Supported: bouncepaw
+
+Hardware Supported: diy
+
 Hardware Availability: diy
