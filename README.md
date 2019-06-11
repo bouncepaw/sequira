@@ -1,10 +1,9 @@
-Sequira
-===
+# Sequira
 
 ![](sequira.jpg)
 
-Keyboard Maintainer: bouncepaw
+An ergonomic keyboard based on QMK framework.
 
-Hardware Supported: diy
-
-Hardware Availability: diy
+## Layout
+![](layout.png)
+![](chords.png)
