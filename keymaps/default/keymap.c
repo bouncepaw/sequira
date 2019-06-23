@@ -79,7 +79,6 @@ void process_custom_mod(enum custom_key ck,
                         uint16_t *timer,
                         keyrecord_t *record,
                         uint8_t modmask_for_hold,
-                        uint8_t modmask_for_kc,
                         uint8_t kc) {
   if (record->event.pressed) {
     *timer = timer_read();
@@ -87,19 +86,14 @@ void process_custom_mod(enum custom_key ck,
   }
   else {
     mod_router(false, modmask_for_hold);
-    if (timer_elapsed(*timer) < MODTAP_TERM) {
-      register_code(modmask_for_kc);
-      tap_code(kc);
-      unregister_code(modmask_for_kc);
-    }
+    if (timer_elapsed(*timer) < MODTAP_TERM)
+      tap_code( kc);
   }
 }
-#define MOD__ 0
-#define KC__ 0
-#define KEYMOD(name, modhold, modpress, kc)                     \
+#define KEYMOD(name, modhold, kc)                     \
   case name:                                                    \
   process_custom_mod(name, &timer_##name, record,              \
-                     KC_##modhold, KC_##modpress, KC_##kc);   \
+                     KC_##modhold, KC_##kc);   \
   return false
 
 void process_custom_layer(enum custom_key ck,
@@ -125,50 +119,60 @@ void process_custom_layer(enum custom_key ck,
   }
 }
 
-#define KEYLAYER(name, layer, modpress, kc, si)         \
+#define KEYLAYER(name, layer, modpress, kc)         \
   case name: {                                               \
   process_custom_layer(name, &timer_##name, record,           \
-                       layer, KC_##modpress, KC_##kc, si);       \
+                       layer, KC_##modpress, KC_##kc);       \
   }\
   return false
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  /*KEYTIMER(FUL_C_x);
-  KEYTIMER(CMD_C_q);
+  KEYTIMER(CYR_LAT);
+  KEYTIMER(MUN_BRA);
+  KEYTIMER(SUN_KET);
+  KEYTIMER(PHOTO);
+  KEYTIMER(LCMD);
   KEYTIMER(ALT_TAB);
   KEYTIMER(CTL_SPC);
-  KEYTIMER(CMD_ESC);
-  KEYTIMER(ALT_DEL);
-  KEYTIMER(NEW_M_x);
-  KEYTIMER(FUL_RET);
-  KEYTIMER(NEW_LNG);
-  */
-  switch (keycode) {
+  KEYTIMER(CMD_DEL);
+  KEYTIMER(ROPT);
 
-    /*
-     * Simple double keys. They trigger the LATIN layer and a mod when
-     * held, and send smth when tapped.
+
+  switch (keycode) {
+    /* CYR_LAT toggles CYRILLIC layer on tap. */
+  case CYR_LAT: {
+    layer_invert(CYRILLIC);
+    return false;
+  }
+    /* On macOS, screenshots are with ⌘⇧n where n is a number. PHOTO
+       key toggles the mods on hold. */
+  case PHOTO: {
+    if (record->event.pressed) {
+      layer_on(MOON);
+      register_code(KC_LGUI);
+      register_code(KC_LSFT);
+    } else {
+      layer_off(MOON);
+      unregister_code(KC_LGUI);
+      unregister_code(KC_LSFT);
+    }
+    return false;
+  }
+    /* MUN_BRA toggles MOON layer or writes left bracket.
+       SUN_KET toggles SUN layer or writes right bracket. */
+    KEYLAYER(MUN_BRA, MOON, LSFT, 9);
+    KEYLAYER(SUN_KET, SUN,  LSFT, 0);
+
+    /* Double keys trigger the LATIN layer and a mod when held or send
+     * smth when tapped.
      *     key      mod   smth
      */
-    //KEYMOD(CMD_C_q, LGUI, LCTL, Q);
-    //KEYMOD(ALT_TAB, LALT, _   , TAB);
-    //KEYMOD(CTL_SPC, RCTL, _   , SPC);
-    //KEYMOD(CMD_ESC, RGUI, _   , ESC);
-    //KEYMOD(ALT_DEL, RALT, _   , DEL);
+    KEYMOD(LCMD,    LGUI, NO);
+    KEYMOD(ROPT,    RALT, NO);
+    KEYMOD(ALT_TAB, LALT, TAB);
+    KEYMOD(CTL_SPC, RCTL, SPC);
+    KEYMOD(CMD_DEL, RGUI, DEL);
 
-    /*
-     * New Moon double keys. They trigger NEW_MOON layer when held,
-     * and send smth when tapped.
-     */
-    //KEYLAYER(NEW_M_x, NEW_MOON, LALT, X,   false);
-    //KEYLAYER(NEW_LNG, NEW_MOON, _   , F19, true);
-
-    /*
-     * Full Moon double keys. They trigger a corresponding _FULL_MOON
-     * layer when held, and send smth when tapped.
-     */
-    //KEYLAYER(FUL_C_x, get_full_moon(), LCTL, X,   false);
-    //KEYLAYER(FUL_RET, get_full_moon(), _   , ENT, false);
   default:
     return true;
   }
