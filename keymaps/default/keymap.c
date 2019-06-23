@@ -1,5 +1,14 @@
 #include QMK_KEYBOARD_H
 
+#define RC8(mod) register_code(KC_##mod)
+#define UC8(mod) unregister_code(KC_##mod)
+#define TC8(kc) tap_code(KC_##kc)
+#define FLX(mod, kc) RC8(mod); TC8(kc); UC8(mod);
+// Shift PRess
+#define spr(kc) FLX(LSFT, kc);
+// Alt PRess
+#define apr(kc) FLX(RALT, kc);
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
   {
    [LATIN] =
@@ -173,3 +182,5 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   }
   return true;
 }
+
+#include "chords.h"

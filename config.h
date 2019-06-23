@@ -24,10 +24,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define VENDOR_ID       0xFEED
 #define PRODUCT_ID      0xBEEF
-#define DEVICE_VER      0x0001
+#define DEVICE_VER      0x0002
 #define MANUFACTURER    Bouncepaw
 #define PRODUCT         Sequira
-#define DESCRIPTION     Firmware for Sequira keyboard
+#define DESCRIPTION     Ergonomic semichorded split keyboard
 
 /* key matrix size */
 #define MATRIX_ROWS 8
@@ -52,6 +52,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define LOCKING_RESYNC_ENABLE
 
 
-#define COMBO_COUNT 0
+#define COMBO_COUNT 52
 
 #endif
