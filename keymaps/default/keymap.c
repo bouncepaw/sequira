@@ -6,7 +6,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
    {
     HALFL(KC_Y, KC_U, KC_R, KC_F,
           KC_H, KC_S, KC_T, KC_A,
-          KC_Z, HC_K, HC_M, HC_C,
+          KC_Z, KC_K, KC_M, KC_C,
           KC_COMM),
     HALFR(KC_W, KC_L, KC_P, KC_J,
           KC_E, KC_O, KC_I, KC_N,
@@ -133,7 +133,7 @@ void process_custom_layer(enum custom_key ck,
   return false
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  KEYTIMER(FUL_C_x);
+  /*KEYTIMER(FUL_C_x);
   KEYTIMER(CMD_C_q);
   KEYTIMER(ALT_TAB);
   KEYTIMER(CTL_SPC);
@@ -142,7 +142,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   KEYTIMER(NEW_M_x);
   KEYTIMER(FUL_RET);
   KEYTIMER(NEW_LNG);
-
+  */
   switch (keycode) {
 
     /*
@@ -150,115 +150,27 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
      * held, and send smth when tapped.
      *     key      mod   smth
      */
-    KEYMOD(CMD_C_q, LGUI, LCTL, Q);
-    KEYMOD(ALT_TAB, LALT, _   , TAB);
-    KEYMOD(CTL_SPC, RCTL, _   , SPC);
-    KEYMOD(CMD_ESC, RGUI, _   , ESC);
-    KEYMOD(ALT_DEL, RALT, _   , DEL);
+    //KEYMOD(CMD_C_q, LGUI, LCTL, Q);
+    //KEYMOD(ALT_TAB, LALT, _   , TAB);
+    //KEYMOD(CTL_SPC, RCTL, _   , SPC);
+    //KEYMOD(CMD_ESC, RGUI, _   , ESC);
+    //KEYMOD(ALT_DEL, RALT, _   , DEL);
 
     /*
      * New Moon double keys. They trigger NEW_MOON layer when held,
      * and send smth when tapped.
      */
-    KEYLAYER(NEW_M_x, NEW_MOON, LALT, X,   false);
-    KEYLAYER(NEW_LNG, NEW_MOON, _   , F19, true);
+    //KEYLAYER(NEW_M_x, NEW_MOON, LALT, X,   false);
+    //KEYLAYER(NEW_LNG, NEW_MOON, _   , F19, true);
 
     /*
      * Full Moon double keys. They trigger a corresponding _FULL_MOON
      * layer when held, and send smth when tapped.
      */
-    KEYLAYER(FUL_C_x, get_full_moon(), LCTL, X,   false);
-    KEYLAYER(FUL_RET, get_full_moon(), _   , ENT, false);
+    //KEYLAYER(FUL_C_x, get_full_moon(), LCTL, X,   false);
+    //KEYLAYER(FUL_RET, get_full_moon(), _   , ENT, false);
   default:
     return true;
   }
-}
-
-enum custom_combo
-  {
-   clX, clQ, clQuote, clDash,
-   ccTS, ccSH, ccF, ccJO, ccE,
-   ccJU, ccZH, ccSHCH, ccHARD,
-   ccQuote, ccDash,
-  };
-#define cl_def(name, key1, key2) \
-  const uint16_t PROGMEM cld##name[] = {KC_##key1, KC_##key2, COMBO_END}
-#define cc_def(name, key1, key2)\
-  const uint16_t PROGMEM ccd##name[] = {K_C_##key1, K_C_##key2, COMBO_END};
-cl_def(X,     D, U);
-cl_def(Q,     R, F);
-cl_def(Quote, M, C);
-cl_def(Dash,  Y, B);
-
-cc_def(TS,    D, U);
-cc_def(SH,    R, SOFT);
-cc_def(F,     V, S);
-cc_def(JO,    T, JE);
-cc_def(E,     JA, L);
-cc_def(JU,    J, P);
-cc_def(ZH,    A, O);
-cc_def(SHCH,  I, N);
-cc_def(HARD,  H, G);
-cc_def(Quote, M, K);
-cc_def(Dash,  Y, B);
-
-#define cl_use(name) [cl##name] = COMBO_ACTION(cld##name)
-#define cc_use(name) [cc##name] = COMBO_ACTION(ccd##name)
-combo_t key_combos[COMBO_COUNT] =
-  {
-   cl_use(X), cl_use(Q), cl_use(Quote), cl_use(Dash),
-   cc_use(TS), cc_use(SH), cc_use(F), cc_use(JO), cc_use(E),
-   cc_use(JU), cc_use(ZH), cc_use(SHCH), cc_use(HARD),
-   cc_use(Quote), cc_use(Dash),
-  };
-
-#define cc_match(name) \
-  case cc##name:\
-  tap_code(K_C_##name);\
-  break
-
-#define cl_match(name)\
-  case cl##name:\
-  tap_code(KC_##name);\
-  break
-
-void process_combo_event(uint8_t combo_index, bool pressed) {
-  if (!pressed) return;
-  if (layer_state & (1 << CYRILLIC))
-    switch (combo_index) {
-      cc_match(TS);
-      cc_match(SH);
-      cc_match(F);
-      cc_match(JO);
-      cc_match(E);
-      cc_match(ZH);
-      cc_match(JU);
-      cc_match(SHCH);
-      cc_match(HARD);
-    case ccQuote:
-      register_code(KC_RALT);
-      tap_code(KC_RBRC);
-      unregister_code(KC_RALT);
-      break;
-    case ccDash:
-      register_code(KC_RALT);
-      tap_code(KC_MINS);
-      unregister_code(KC_RALT);
-      break;
-    }
-  else
-    switch (combo_index) {
-      cl_match(Q);
-      cl_match(X);
-    case clQuote:
-      register_code(KC_RALT);
-      tap_code(KC_RBRC);
-      unregister_code(KC_RALT);
-      break;
-    case clDash:
-      register_code(KC_RALT);
-      tap_code(KC_MINS);
-      unregister_code(KC_RALT);
-      break;
-    }
+  return true;
 }

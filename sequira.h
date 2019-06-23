@@ -1,50 +1,7 @@
 #pragma once
 
 #include "quantum.h"
-
-
-/*
- * Synonyms for cyrillic letters. They are named by scheme RU_smth where smth
- * is translitted letter.
- */
-#define RU_A KC_F
-#define RU_B KC_COMM
-#define RU_V KC_D
-#define RU_G KC_U
-#define RU_D KC_L
-#define RU_JE KC_T
-#define RU_JO KC_NUBS
-#define RU_ZH KC_SCLN
-#define RU_Z KC_P
-#define RU_I KC_B
-#define RU_J KC_Q
-#define RU_K KC_R
-#define RU_L KC_K
-#define RU_M KC_V
-#define RU_N KC_Y
-#define RU_O KC_J
-#define RU_P KC_G
-#define RU_R KC_H
-#define RU_S KC_C
-#define RU_T KC_N
-#define RU_U KC_E
-#define RU_F KC_A
-#define RU_H KC_LBRC
-#define RU_TS KC_W
-#define RU_CH KC_X
-#define RU_SH KC_I
-#define RU_SHCH KC_O
-#define RU_HARD KC_RBRC
-#define RU_Y KC_S
-#define RU_SOFT KC_M
-#define RU_E KC_QUOT
-#define RU_JU KC_DOT
-#define RU_JA KC_Z
-#define RU_NUM KC_3
-#define RU_DQUO LSFT(KC_2)
-#define RU_DOT  KC_SLSH
-#define RU_COMM LSFT(KC_SLSH)
-#define RU_SCLN LSFT(KC_4)
+#include "rusmap.h"
 
 /*
  * Layers.
@@ -116,7 +73,7 @@ enum custom_key
     { k30, k31, k32, k33, k34, k35 },      \
     { k40, k41, k42, k43, k44, k45 }
 
-#define HALFL(k11, k12, k13, k14                                      \
+#define HALFL(k11, k12, k13, k14,                                     \
               k21, k22, k23, k24,                                     \
               k31, k32, k33, k34, k25)                                \
 HALF(KC_ESC,  k11,     k12,     k13,  k14,     LCTL(KC_Q),            \
@@ -128,6 +85,6 @@ HALF(KC_ESC,  k11,     k12,     k13,  k14,     LCTL(KC_Q),            \
               k21, k22, k23, k24,                                    \
               k31, k32, k33, k34, k20, k30)                          \
 HALF(LALT(KC_X), k11,     k12,  k13,   k14,     LCTL(KC_X),          \
-     k20,        k21,     k22,  k23,   k24,     k25,                 \
-     k30,        k31,     k32,  k33,   k34,     k35,                 \
+     k20,        k21,     k22,  k23,   k24,     KC_ENT,                 \
+     k30,        k31,     k32,  k33,   k34,     KC_LBRC /* fix*/,          \
      CTL_SPC,    CMD_DEL, ROPT, PHOTO, HYT_SFT, NEW_MUN)
