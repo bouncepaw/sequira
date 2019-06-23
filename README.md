@@ -1,9 +1,9 @@
 # Sequira
 
-![](sequira.jpg)
+![](pic/sequira.jpg)
 
 An ergonomic keyboard based on QMK framework.
 
 ## Layout
-![](layout.png)
-![](chords.png)
+![](pic/layout.png)
+![](pic/chords.png)
