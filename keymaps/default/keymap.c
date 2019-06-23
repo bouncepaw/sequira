@@ -20,7 +20,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
           RU_Z, RU_CH, RU_M, RU_K,
           RU_COMM),
     HALFR(RU_JA, RU_L, RU_P, RU_J,
-          RU_JE, RU_J, RU_I, RU_N,
+          RU_JE, RU_O, RU_I, RU_N,
           RU_D,  RU_B, RU_H, RU_G,
           RU_DOT, RU_SCLN),
    },
@@ -90,10 +90,10 @@ void process_custom_mod(enum custom_key ck,
       tap_code( kc);
   }
 }
-#define KEYMOD(name, modhold, kc)                     \
-  case name:                                                    \
-  process_custom_mod(name, &timer_##name, record,              \
-                     KC_##modhold, KC_##kc);   \
+#define KEYMOD(name, modhold, kc)                   \
+  case name:                                        \
+  process_custom_mod(name, &timer_##name, record,   \
+                     KC_##modhold, KC_##kc);        \
   return false
 
 void process_custom_layer(enum custom_key ck,
@@ -101,8 +101,7 @@ void process_custom_layer(enum custom_key ck,
                           keyrecord_t *record,
                           layer_state_t layer,
                           uint8_t modmask_for_kc,
-                          uint16_t kc,
-                          bool should_invert) {
+                          uint16_t kc) {
   if (record->event.pressed) {
     *timer = timer_read();
     layer_on(layer);
@@ -113,40 +112,39 @@ void process_custom_layer(enum custom_key ck,
       register_code(modmask_for_kc);
       tap_code(kc);
       unregister_code(modmask_for_kc);
-      if (should_invert)
-        layer_invert(CYRILLIC);
     }
   }
 }
 
-#define KEYLAYER(name, layer, modpress, kc)         \
-  case name: {                                               \
-  process_custom_layer(name, &timer_##name, record,           \
-                       layer, KC_##modpress, KC_##kc);       \
-  }\
+#define KEYLAYER(name, layer, modpress, kc)                 \
+  case name: {                                              \
+    process_custom_layer(name, &timer_##name, record,       \
+                         layer, KC_##modpress, KC_##kc);    \
+  }                                                         \
   return false
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  KEYTIMER(CYR_LAT);
   KEYTIMER(MUN_BRA);
   KEYTIMER(SUN_KET);
-  KEYTIMER(PHOTO);
   KEYTIMER(LCMD);
   KEYTIMER(ALT_TAB);
   KEYTIMER(CTL_SPC);
   KEYTIMER(CMD_DEL);
   KEYTIMER(ROPT);
 
-
   switch (keycode) {
+
     /* CYR_LAT toggles CYRILLIC layer on tap. */
-  case CYR_LAT: {
-    layer_invert(CYRILLIC);
+  case CYR_LAT:
+    if (record->event.pressed) {
+      layer_invert(CYRILLIC);
+      tap_code(KC_F19);
+    }
     return false;
-  }
+
     /* On macOS, screenshots are with ⌘⇧n where n is a number. PHOTO
        key toggles the mods on hold. */
-  case PHOTO: {
+  case PHOTO:
     if (record->event.pressed) {
       layer_on(MOON);
       register_code(KC_LGUI);
@@ -157,7 +155,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       unregister_code(KC_LSFT);
     }
     return false;
-  }
+
     /* MUN_BRA toggles MOON layer or writes left bracket.
        SUN_KET toggles SUN layer or writes right bracket. */
     KEYLAYER(MUN_BRA, MOON, LSFT, 9);
@@ -172,9 +170,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     KEYMOD(ALT_TAB, LALT, TAB);
     KEYMOD(CTL_SPC, RCTL, SPC);
     KEYMOD(CMD_DEL, RGUI, DEL);
-
-  default:
-    return true;
   }
   return true;
 }
