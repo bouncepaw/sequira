@@ -147,7 +147,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   case CYR_LAT:
     if (record->event.pressed) {
       layer_invert(CYRILLIC);
-      tap_code(KC_F19);
+      tap_code(KC_CAPS);
     }
     return false;
 
