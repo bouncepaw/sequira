@@ -13,9 +13,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
   {
    [LATIN] =
    {
-    HALFL(KC_Y, KC_U, KC_R, KC_F,
+    HALFL(KC_Z, KC_U, KC_R, KC_F,
           KC_H, KC_S, KC_T, KC_A,
-          KC_Z, KC_K, KC_M, KC_C,
+          KC_Y, KC_K, KC_M, KC_C,
           KC_COMM),
     HALFR(KC_W, KC_L, KC_P, KC_J,
           KC_E, KC_O, KC_I, KC_N,
@@ -24,13 +24,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
    },
    [CYRILLIC] =
    {
-    HALFL(RU_Y, RU_U,  RU_R, RU_SOFT,
+    HALFL(RU_Z, RU_U,  RU_R, RU_SOFT,
           RU_V, RU_S,  RU_T, RU_A,
-          RU_Z, RU_CH, RU_M, RU_K,
+          RU_Y, RU_CH, RU_M, RU_K,
           RU_COMM),
-    HALFR(RU_JA, RU_L, RU_P, RU_J,
+    HALFR(RU_JA, RU_L, RU_P, RU_H,
           RU_JE, RU_O, RU_I, RU_N,
-          RU_D,  RU_B, RU_H, RU_G,
+          RU_D,  RU_B, RU_J, RU_G,
           RU_DOT, RU_SCLN),
    },
    [MOON] =
