@@ -46,15 +46,15 @@ enum custom_key
 #define HALFL(k11, k12, k13, k14,                                     \
               k21, k22, k23, k24, k25,                                \
               k31, k32, k33, k34, k35)                                \
-HALF(KC_ESC,  k11,     k12,     k13,  k14,     KC_F16,            \
+HALF(KC_F13,  k11,     k12,     k13,  k14,     KC_F14,            \
      CYR_LAT, k21,     k22,     k23,  k24,     k25,                   \
      MUN_BRA, k31,     k32,     k33,  k34,     k35,                   \
-     MO(SUN), KC_LCTL, KC_SLCK, LCMD, ALT_TAB, MT(MOD_LSFT, KC_BSPC))
+     LT(SUN, KC_ESC), KC_LCTL, KC_SLCK, LCMD, ALT_TAB, MT(MOD_LSFT, KC_BSPC))
 
 #define HALFR(k11, k12, k13, k14,                                    \
               k21, k22, k23, k24, k20,                               \
               k31, k32, k33, k34, k30)                                      \
-HALF(KC_APP,     k11,     k12,  k13,   k14,     LCTL(LSFT(KC_P)),         \
+HALF(KC_F15,     k11,     k12,  k13,   k14,     KC_APP,         \
      k20,        k21,     k22,  k23,   k24,     KC_ENT,                 \
      k30,        k31,     k32,  k33,   k34,     SUN_KET,          \
      CTL_SPC,    CMD_DEL, ROPT, PHOTO, KC_RSFT, MO(MOON))
