@@ -1,442 +1,349 @@
 #ifndef KLAVAROG_CHORDGEN
 #define KLAVAROG_CHORDGEN
 enum combo_events {
-  combo_event_2900209085426453175, //tap_code16(RU_TS);
-  combo_event_5450569932287936653, //tap_code16(RU_F);
-  combo_event_5671676338627087710, //tap_code16(RU_SH);
-  combo_event_5841879690931198959, //tap_code16(RU_SHCH);
-  combo_event_5540135680286548709, //tap_code16(RU_JU);
-  combo_event_4494668746445220460, //tap_code16(RU_E);
-  combo_event_5736892998123766717, //tap_code16(KC_GRAVE);
-  combo_event_2454073383096629036, //tap_code16(RU_JO);
-  combo_event_4895441227728428339, //tap_code16(RU_ZH);
-  combo_event_7424424437480124040, //tap_code16(RU_HARD);
-  combo_event_4040581756291048260, //tap_code16(KC_EQUAL);
-  combo_event_3438261748228321472, //tap_code16(KC_BSLS);
-  combo_event_4574713174501357403, //spr(1)
-  combo_event_5172565213032231929, //spr(EQUAL)
-  combo_event_3898123808306202638, //spr(8)
-  combo_event_5255048527561572636, //spr(5)
-  combo_event_4200577150548607152, //spr(MINS)
-  combo_event_6506004595546901508, //RC8(LSFT); apr(MINS); UC8(LSFT);
-  combo_event_7827324316328300267, //spr(7)
-  combo_event_6663400246912871762, //spr(BSLS)
-  combo_event_4864669520785935895, //spr(6)
-  combo_event_4046384311586950563, //spr(2)
-  combo_event_4303653378879804836, //apr(RBRC)
-  combo_event_6011575887049021526, //RC8(LSFT); apr(RBRC); UC8(LSFT);
-  combo_event_3360597829741488991, //tap_code16(KC_Q);
-  combo_event_4681051653161381570, //tap_code16(KC_J);
-  combo_event_3437112391670736347, //spr(COMM)
-  combo_event_4031057562054992194, //apr(RBRC)
-  combo_event_1596072110637648876, //tap_code16(KC_LBRC);
-  combo_event_4241925233166793250, //spr(LBRC)
-  combo_event_6937303351329705487, //spr(RBRC)
-  combo_event_5060629599034371665, //tap_code16(KC_RBRC);
-  combo_event_4764937885664687957, //RC8(LSFT); apr(RBRC); UC8(LSFT);
-  combo_event_6726621926677520290, //spr(DOT)
-  combo_event_5342828691337311291, //spr(2)
-  combo_event_5409118428755652335, //spr(3)
-  combo_event_5907918408545251243, //spr(4)
-  combo_event_7724581494155652439, //spr(7)
-  combo_event_2741627665048618493, //spr(8)
-  combo_event_4293538879439444099, //spr(EQUAL)
-  combo_event_7085428533108454221, //tap_code16(KC_SLSH);
-  combo_event_6742304218490885006, //tap_code16(KC_BSLS);
-  combo_event_4810581455825905250, //spr(SLSH)
-  combo_event_2850590819946296010, //spr(1)
-  combo_event_5301462043032874118, //spr(6)
-  combo_event_8977585948973148278, //spr(BSLS)
-  combo_event_5571058296813207174, //RC8(LSFT); apr(MINS); UC8(LSFT);
-  combo_event_5327796417291827053, //spr(GRAVE)
-  combo_event_7227483005584079023, //tap_code16(KC_GRAVE);
-  combo_event_7328648489149772307, //spr(MINS)
-  combo_event_4256359822000941831, //spr(5)
-  combo_event_4847294540635313794, //spr(SCOLON)
-  combo_event_1921776302051919863, //tap_code16(KC_EQUAL);
-  combo_event_4354786550664561654, //spr(QUOT)
-  combo_event_5176604073201047627, //tap_code16(KC_QUOT);
+  combo_event_2903428668459347535, //tap_code16(RU_TS);
+  combo_event_2335615001108868936, //tap_code16(RU_F);
+  combo_event_1758195893935248580, //tap_code16(RU_SH);
+  combo_event_3353337648065483167, //tap_code16(RU_SHCH);
+  combo_event_4995448397753489606, //tap_code16(RU_JU);
+  combo_event_3300096067910844091, //tap_code16(KC_GRAVE);
+  combo_event_1717179187651220255, //tap_code16(RU_JO);
+  combo_event_3743771488396639216, //tap_code16(RU_HARD);
+  combo_event_255500310876116019, //tap_code16(KC_EQUAL);
+  combo_event_6038620050227370686, //tap_code16(KC_BSLS);
+  combo_event_2100497576748425420, //spr(1)
+  combo_event_8106211181296241986, //spr(EQUAL)
+  combo_event_4768562160614748010, //spr(8)
+  combo_event_3224855391667276352, //spr(5)
+  combo_event_3472043718410196765, //spr(MINS)
+  combo_event_4761317996638153031, //spr(7)
+  combo_event_5104470024272084248, //spr(BSLS)
+  combo_event_6539179470831365724, //spr(6)
+  combo_event_1312945295595722832, //tap_code16(KC_Q);
+  combo_event_6800437215127306157, //tap_code16(KC_X);
+  combo_event_4341985291761933337, //spr(COMM)
+  combo_event_4906069351709551203, //tap_code16(KC_LBRC);
+  combo_event_2648206544723721230, //spr(LBRC)
+  combo_event_1203198324969893324, //spr(RBRC)
+  combo_event_7744491230964201243, //tap_code16(KC_RBRC);
+  combo_event_7048612701999671293, //spr(DOT)
+  combo_event_2402939494229388692, //spr(2)
+  combo_event_4879238000955844223, //spr(3)
+  combo_event_6022806290775585872, //spr(4)
+  combo_event_3351334440585536920, //spr(7)
+  combo_event_3346175091820902919, //spr(8)
+  combo_event_6398914094340340164, //spr(EQUAL)
+  combo_event_5338749241812788684, //tap_code16(KC_SLSH);
+  combo_event_5665114857339594269, //tap_code16(KC_BSLS);
+  combo_event_4184873831467278278, //spr(SLSH)
+  combo_event_3117976321307144644, //spr(1)
+  combo_event_4235557754533728324, //spr(6)
+  combo_event_3603478089481758952, //spr(BSLS)
+  combo_event_5398385701082147783, //spr(GRAVE)
+  combo_event_7054801745581390725, //tap_code16(KC_GRAVE);
+  combo_event_2007665748127160205, //spr(MINS)
+  combo_event_4345812965115843518, //spr(5)
+  combo_event_8457396452813239558, //spr(SCOLON)
+  combo_event_3569972357894864960, //tap_code16(KC_EQUAL);
   
 };
-const uint16_t PROGMEM combo_array_2900209085426453175[] = {
-  RU_Z, RU_U, COMBO_END
+const uint16_t PROGMEM combo_array_2903428668459347535[] = {
+  RU_Z, RU_P, COMBO_END
 };
-const uint16_t PROGMEM combo_array_5450569932287936653[] = {
-  RU_J, RU_G, COMBO_END
+const uint16_t PROGMEM combo_array_2335615001108868936[] = {
+  RU_B, RU_G, COMBO_END
 };
-const uint16_t PROGMEM combo_array_5671676338627087710[] = {
-  RU_JA, RU_L, COMBO_END
+const uint16_t PROGMEM combo_array_1758195893935248580[] = {
+  RU_JA, RU_SOFT, COMBO_END
 };
-const uint16_t PROGMEM combo_array_5841879690931198959[] = {
-  RU_P, RU_H, COMBO_END
+const uint16_t PROGMEM combo_array_3353337648065483167[] = {
+  RU_R, RU_D, COMBO_END
 };
-const uint16_t PROGMEM combo_array_5540135680286548709[] = {
-  RU_Y, RU_CH, COMBO_END
+const uint16_t PROGMEM combo_array_4995448397753489606[] = {
+  RU_Y, RU_O, COMBO_END
 };
-const uint16_t PROGMEM combo_array_4494668746445220460[] = {
-  RU_R, RU_SOFT, COMBO_END
-};
-const uint16_t PROGMEM combo_array_5736892998123766717[] = {
+const uint16_t PROGMEM combo_array_3300096067910844091[] = {
   RU_T, RU_M, COMBO_END
 };
-const uint16_t PROGMEM combo_array_2454073383096629036[] = {
-  RU_Z, RU_SOFT, COMBO_END
+const uint16_t PROGMEM combo_array_1717179187651220255[] = {
+  RU_J, RU_D, COMBO_END
 };
-const uint16_t PROGMEM combo_array_4895441227728428339[] = {
-  RU_O, RU_B, COMBO_END
-};
-const uint16_t PROGMEM combo_array_7424424437480124040[] = {
+const uint16_t PROGMEM combo_array_3743771488396639216[] = {
   RU_Z, RU_K, COMBO_END
 };
-const uint16_t PROGMEM combo_array_4040581756291048260[] = {
-  RU_JE, RU_D, COMBO_END
+const uint16_t PROGMEM combo_array_255500310876116019[] = {
+  RU_JE, RU_A, COMBO_END
 };
-const uint16_t PROGMEM combo_array_3438261748228321472[] = {
-  RU_D, RU_G, COMBO_END
+const uint16_t PROGMEM combo_array_6038620050227370686[] = {
+  RU_A, RU_G, COMBO_END
 };
-const uint16_t PROGMEM combo_array_4574713174501357403[] = {
-  RU_B, RU_J, COMBO_END
+const uint16_t PROGMEM combo_array_2100497576748425420[] = {
+  RU_B, RU_Y, COMBO_END
 };
-const uint16_t PROGMEM combo_array_5172565213032231929[] = {
-  RU_L, RU_P, COMBO_END
+const uint16_t PROGMEM combo_array_8106211181296241986[] = {
+  RU_JA, RU_U, COMBO_END
 };
-const uint16_t PROGMEM combo_array_3898123808306202638[] = {
-  RU_D, RU_J, COMBO_END
+const uint16_t PROGMEM combo_array_4768562160614748010[] = {
+  RU_A, RU_B, COMBO_END
 };
-const uint16_t PROGMEM combo_array_5255048527561572636[] = {
-  RU_JA, RU_P, COMBO_END
+const uint16_t PROGMEM combo_array_3224855391667276352[] = {
+  RU_SOFT, RU_U, COMBO_END
 };
-const uint16_t PROGMEM combo_array_4200577150548607152[] = {
+const uint16_t PROGMEM combo_array_3472043718410196765[] = {
   RU_JE, RU_O, RU_I, COMBO_END
 };
-const uint16_t PROGMEM combo_array_6506004595546901508[] = {
-  RU_S, RU_T, RU_A, COMBO_END
-};
-const uint16_t PROGMEM combo_array_7827324316328300267[] = {
+const uint16_t PROGMEM combo_array_4761317996638153031[] = {
   RU_CH, RU_M, COMBO_END
 };
-const uint16_t PROGMEM combo_array_6663400246912871762[] = {
-  RU_Y, RU_K, COMBO_END
+const uint16_t PROGMEM combo_array_5104470024272084248[] = {
+  RU_J, RU_K, COMBO_END
 };
-const uint16_t PROGMEM combo_array_4864669520785935895[] = {
-  RU_A, RU_K, COMBO_END
+const uint16_t PROGMEM combo_array_6539179470831365724[] = {
+  RU_N, RU_K, COMBO_END
 };
-const uint16_t PROGMEM combo_array_4046384311586950563[] = {
-  RU_A, KC_COMM, COMBO_END
-};
-const uint16_t PROGMEM combo_array_4303653378879804836[] = {
-  RU_U, RU_S, COMBO_END
-};
-const uint16_t PROGMEM combo_array_6011575887049021526[] = {
-  RU_P, RU_I, COMBO_END
-};
-const uint16_t PROGMEM combo_array_3360597829741488991[] = {
+const uint16_t PROGMEM combo_array_1312945295595722832[] = {
   KC_T, KC_M, COMBO_END
 };
-const uint16_t PROGMEM combo_array_4681051653161381570[] = {
-  KC_O, KC_B, COMBO_END
+const uint16_t PROGMEM combo_array_6800437215127306157[] = {
+  KC_O, KC_V, COMBO_END
 };
-const uint16_t PROGMEM combo_array_3437112391670736347[] = {
-  KC_Z, KC_H, COMBO_END
+const uint16_t PROGMEM combo_array_4341985291761933337[] = {
+  KC_P, KC_S, COMBO_END
 };
-const uint16_t PROGMEM combo_array_4031057562054992194[] = {
-  KC_U, KC_S, COMBO_END
-};
-const uint16_t PROGMEM combo_array_1596072110637648876[] = {
+const uint16_t PROGMEM combo_array_4906069351709551203[] = {
   KC_R, KC_T, COMBO_END
 };
-const uint16_t PROGMEM combo_array_4241925233166793250[] = {
-  KC_F, KC_A, COMBO_END
+const uint16_t PROGMEM combo_array_2648206544723721230[] = {
+  KC_D, KC_N, COMBO_END
 };
-const uint16_t PROGMEM combo_array_6937303351329705487[] = {
-  KC_W, KC_E, COMBO_END
+const uint16_t PROGMEM combo_array_1203198324969893324[] = {
+  KC_F, KC_E, COMBO_END
 };
-const uint16_t PROGMEM combo_array_5060629599034371665[] = {
-  KC_L, KC_O, COMBO_END
+const uint16_t PROGMEM combo_array_7744491230964201243[] = {
+  KC_W, KC_O, COMBO_END
 };
-const uint16_t PROGMEM combo_array_4764937885664687957[] = {
-  KC_P, KC_I, COMBO_END
+const uint16_t PROGMEM combo_array_7048612701999671293[] = {
+  KC_U, KC_I, COMBO_END
 };
-const uint16_t PROGMEM combo_array_6726621926677520290[] = {
-  KC_J, KC_N, COMBO_END
-};
-const uint16_t PROGMEM combo_array_5342828691337311291[] = {
+const uint16_t PROGMEM combo_array_2402939494229388692[] = {
   KC_M, KC_C, COMBO_END
 };
-const uint16_t PROGMEM combo_array_5409118428755652335[] = {
+const uint16_t PROGMEM combo_array_4879238000955844223[] = {
   KC_D, KC_B, COMBO_END
 };
-const uint16_t PROGMEM combo_array_5907918408545251243[] = {
-  KC_Z, KC_F, COMBO_END
+const uint16_t PROGMEM combo_array_6022806290775585872[] = {
+  KC_Z, KC_D, COMBO_END
 };
-const uint16_t PROGMEM combo_array_7724581494155652439[] = {
-  KC_W, KC_J, COMBO_END
+const uint16_t PROGMEM combo_array_3351334440585536920[] = {
+  KC_F, KC_J, COMBO_END
 };
-const uint16_t PROGMEM combo_array_2741627665048618493[] = {
-  KC_D, KC_V, COMBO_END
+const uint16_t PROGMEM combo_array_3346175091820902919[] = {
+  KC_A, KC_B, COMBO_END
 };
-const uint16_t PROGMEM combo_array_4293538879439444099[] = {
-  KC_L, KC_P, COMBO_END
+const uint16_t PROGMEM combo_array_6398914094340340164[] = {
+  KC_W, KC_U, COMBO_END
 };
-const uint16_t PROGMEM combo_array_7085428533108454221[] = {
+const uint16_t PROGMEM combo_array_5338749241812788684[] = {
   KC_Y, KC_C, COMBO_END
 };
-const uint16_t PROGMEM combo_array_6742304218490885006[] = {
-  KC_D, KC_G, COMBO_END
+const uint16_t PROGMEM combo_array_5665114857339594269[] = {
+  KC_A, KC_G, COMBO_END
 };
-const uint16_t PROGMEM combo_array_4810581455825905250[] = {
+const uint16_t PROGMEM combo_array_4184873831467278278[] = {
   KC_K, KC_M, COMBO_END
 };
-const uint16_t PROGMEM combo_array_2850590819946296010[] = {
+const uint16_t PROGMEM combo_array_3117976321307144644[] = {
   KC_B, KC_V, COMBO_END
 };
-const uint16_t PROGMEM combo_array_5301462043032874118[] = {
+const uint16_t PROGMEM combo_array_4235557754533728324[] = {
   KC_Z, KC_R, COMBO_END
 };
-const uint16_t PROGMEM combo_array_8977585948973148278[] = {
-  KC_U, KC_F, COMBO_END
+const uint16_t PROGMEM combo_array_3603478089481758952[] = {
+  KC_P, KC_D, COMBO_END
 };
-const uint16_t PROGMEM combo_array_5571058296813207174[] = {
-  KC_S, KC_T, KC_A, COMBO_END
+const uint16_t PROGMEM combo_array_5398385701082147783[] = {
+  KC_O, KC_I, KC_L, COMBO_END
 };
-const uint16_t PROGMEM combo_array_5327796417291827053[] = {
-  KC_O, KC_I, KC_N, COMBO_END
+const uint16_t PROGMEM combo_array_7054801745581390725[] = {
+  KC_N, KC_COMM, COMBO_END
 };
-const uint16_t PROGMEM combo_array_7227483005584079023[] = {
-  KC_H, KC_S, KC_T, COMBO_END
-};
-const uint16_t PROGMEM combo_array_7328648489149772307[] = {
+const uint16_t PROGMEM combo_array_2007665748127160205[] = {
   KC_E, KC_O, KC_I, COMBO_END
 };
-const uint16_t PROGMEM combo_array_4256359822000941831[] = {
-  KC_W, KC_P, COMBO_END
+const uint16_t PROGMEM combo_array_4345812965115843518[] = {
+  KC_F, KC_U, COMBO_END
 };
-const uint16_t PROGMEM combo_array_4847294540635313794[] = {
-  KC_A, KC_C, COMBO_END
+const uint16_t PROGMEM combo_array_8457396452813239558[] = {
+  KC_N, KC_C, COMBO_END
 };
-const uint16_t PROGMEM combo_array_1921776302051919863[] = {
-  KC_E, KC_D, COMBO_END
-};
-const uint16_t PROGMEM combo_array_4354786550664561654[] = {
-  KC_A, KC_COMM, COMBO_END
-};
-const uint16_t PROGMEM combo_array_5176604073201047627[] = {
-  KC_DOT, KC_E, COMBO_END
+const uint16_t PROGMEM combo_array_3569972357894864960[] = {
+  KC_E, KC_N, COMBO_END
 };
 combo_t key_combos[COMBO_COUNT] = {
-  [combo_event_2900209085426453175] = COMBO_ACTION(combo_array_2900209085426453175),
-  [combo_event_5450569932287936653] = COMBO_ACTION(combo_array_5450569932287936653),
-  [combo_event_5671676338627087710] = COMBO_ACTION(combo_array_5671676338627087710),
-  [combo_event_5841879690931198959] = COMBO_ACTION(combo_array_5841879690931198959),
-  [combo_event_5540135680286548709] = COMBO_ACTION(combo_array_5540135680286548709),
-  [combo_event_4494668746445220460] = COMBO_ACTION(combo_array_4494668746445220460),
-  [combo_event_5736892998123766717] = COMBO_ACTION(combo_array_5736892998123766717),
-  [combo_event_2454073383096629036] = COMBO_ACTION(combo_array_2454073383096629036),
-  [combo_event_4895441227728428339] = COMBO_ACTION(combo_array_4895441227728428339),
-  [combo_event_7424424437480124040] = COMBO_ACTION(combo_array_7424424437480124040),
-  [combo_event_4040581756291048260] = COMBO_ACTION(combo_array_4040581756291048260),
-  [combo_event_3438261748228321472] = COMBO_ACTION(combo_array_3438261748228321472),
-  [combo_event_4574713174501357403] = COMBO_ACTION(combo_array_4574713174501357403),
-  [combo_event_5172565213032231929] = COMBO_ACTION(combo_array_5172565213032231929),
-  [combo_event_3898123808306202638] = COMBO_ACTION(combo_array_3898123808306202638),
-  [combo_event_5255048527561572636] = COMBO_ACTION(combo_array_5255048527561572636),
-  [combo_event_4200577150548607152] = COMBO_ACTION(combo_array_4200577150548607152),
-  [combo_event_6506004595546901508] = COMBO_ACTION(combo_array_6506004595546901508),
-  [combo_event_7827324316328300267] = COMBO_ACTION(combo_array_7827324316328300267),
-  [combo_event_6663400246912871762] = COMBO_ACTION(combo_array_6663400246912871762),
-  [combo_event_4864669520785935895] = COMBO_ACTION(combo_array_4864669520785935895),
-  [combo_event_4046384311586950563] = COMBO_ACTION(combo_array_4046384311586950563),
-  [combo_event_4303653378879804836] = COMBO_ACTION(combo_array_4303653378879804836),
-  [combo_event_6011575887049021526] = COMBO_ACTION(combo_array_6011575887049021526),
-  [combo_event_3360597829741488991] = COMBO_ACTION(combo_array_3360597829741488991),
-  [combo_event_4681051653161381570] = COMBO_ACTION(combo_array_4681051653161381570),
-  [combo_event_3437112391670736347] = COMBO_ACTION(combo_array_3437112391670736347),
-  [combo_event_4031057562054992194] = COMBO_ACTION(combo_array_4031057562054992194),
-  [combo_event_1596072110637648876] = COMBO_ACTION(combo_array_1596072110637648876),
-  [combo_event_4241925233166793250] = COMBO_ACTION(combo_array_4241925233166793250),
-  [combo_event_6937303351329705487] = COMBO_ACTION(combo_array_6937303351329705487),
-  [combo_event_5060629599034371665] = COMBO_ACTION(combo_array_5060629599034371665),
-  [combo_event_4764937885664687957] = COMBO_ACTION(combo_array_4764937885664687957),
-  [combo_event_6726621926677520290] = COMBO_ACTION(combo_array_6726621926677520290),
-  [combo_event_5342828691337311291] = COMBO_ACTION(combo_array_5342828691337311291),
-  [combo_event_5409118428755652335] = COMBO_ACTION(combo_array_5409118428755652335),
-  [combo_event_5907918408545251243] = COMBO_ACTION(combo_array_5907918408545251243),
-  [combo_event_7724581494155652439] = COMBO_ACTION(combo_array_7724581494155652439),
-  [combo_event_2741627665048618493] = COMBO_ACTION(combo_array_2741627665048618493),
-  [combo_event_4293538879439444099] = COMBO_ACTION(combo_array_4293538879439444099),
-  [combo_event_7085428533108454221] = COMBO_ACTION(combo_array_7085428533108454221),
-  [combo_event_6742304218490885006] = COMBO_ACTION(combo_array_6742304218490885006),
-  [combo_event_4810581455825905250] = COMBO_ACTION(combo_array_4810581455825905250),
-  [combo_event_2850590819946296010] = COMBO_ACTION(combo_array_2850590819946296010),
-  [combo_event_5301462043032874118] = COMBO_ACTION(combo_array_5301462043032874118),
-  [combo_event_8977585948973148278] = COMBO_ACTION(combo_array_8977585948973148278),
-  [combo_event_5571058296813207174] = COMBO_ACTION(combo_array_5571058296813207174),
-  [combo_event_5327796417291827053] = COMBO_ACTION(combo_array_5327796417291827053),
-  [combo_event_7227483005584079023] = COMBO_ACTION(combo_array_7227483005584079023),
-  [combo_event_7328648489149772307] = COMBO_ACTION(combo_array_7328648489149772307),
-  [combo_event_4256359822000941831] = COMBO_ACTION(combo_array_4256359822000941831),
-  [combo_event_4847294540635313794] = COMBO_ACTION(combo_array_4847294540635313794),
-  [combo_event_1921776302051919863] = COMBO_ACTION(combo_array_1921776302051919863),
-  [combo_event_4354786550664561654] = COMBO_ACTION(combo_array_4354786550664561654),
-  [combo_event_5176604073201047627] = COMBO_ACTION(combo_array_5176604073201047627),
+  [combo_event_2903428668459347535] = COMBO_ACTION(combo_array_2903428668459347535),
+  [combo_event_2335615001108868936] = COMBO_ACTION(combo_array_2335615001108868936),
+  [combo_event_1758195893935248580] = COMBO_ACTION(combo_array_1758195893935248580),
+  [combo_event_3353337648065483167] = COMBO_ACTION(combo_array_3353337648065483167),
+  [combo_event_4995448397753489606] = COMBO_ACTION(combo_array_4995448397753489606),
+  [combo_event_3300096067910844091] = COMBO_ACTION(combo_array_3300096067910844091),
+  [combo_event_1717179187651220255] = COMBO_ACTION(combo_array_1717179187651220255),
+  [combo_event_3743771488396639216] = COMBO_ACTION(combo_array_3743771488396639216),
+  [combo_event_255500310876116019] = COMBO_ACTION(combo_array_255500310876116019),
+  [combo_event_6038620050227370686] = COMBO_ACTION(combo_array_6038620050227370686),
+  [combo_event_2100497576748425420] = COMBO_ACTION(combo_array_2100497576748425420),
+  [combo_event_8106211181296241986] = COMBO_ACTION(combo_array_8106211181296241986),
+  [combo_event_4768562160614748010] = COMBO_ACTION(combo_array_4768562160614748010),
+  [combo_event_3224855391667276352] = COMBO_ACTION(combo_array_3224855391667276352),
+  [combo_event_3472043718410196765] = COMBO_ACTION(combo_array_3472043718410196765),
+  [combo_event_4761317996638153031] = COMBO_ACTION(combo_array_4761317996638153031),
+  [combo_event_5104470024272084248] = COMBO_ACTION(combo_array_5104470024272084248),
+  [combo_event_6539179470831365724] = COMBO_ACTION(combo_array_6539179470831365724),
+  [combo_event_1312945295595722832] = COMBO_ACTION(combo_array_1312945295595722832),
+  [combo_event_6800437215127306157] = COMBO_ACTION(combo_array_6800437215127306157),
+  [combo_event_4341985291761933337] = COMBO_ACTION(combo_array_4341985291761933337),
+  [combo_event_4906069351709551203] = COMBO_ACTION(combo_array_4906069351709551203),
+  [combo_event_2648206544723721230] = COMBO_ACTION(combo_array_2648206544723721230),
+  [combo_event_1203198324969893324] = COMBO_ACTION(combo_array_1203198324969893324),
+  [combo_event_7744491230964201243] = COMBO_ACTION(combo_array_7744491230964201243),
+  [combo_event_7048612701999671293] = COMBO_ACTION(combo_array_7048612701999671293),
+  [combo_event_2402939494229388692] = COMBO_ACTION(combo_array_2402939494229388692),
+  [combo_event_4879238000955844223] = COMBO_ACTION(combo_array_4879238000955844223),
+  [combo_event_6022806290775585872] = COMBO_ACTION(combo_array_6022806290775585872),
+  [combo_event_3351334440585536920] = COMBO_ACTION(combo_array_3351334440585536920),
+  [combo_event_3346175091820902919] = COMBO_ACTION(combo_array_3346175091820902919),
+  [combo_event_6398914094340340164] = COMBO_ACTION(combo_array_6398914094340340164),
+  [combo_event_5338749241812788684] = COMBO_ACTION(combo_array_5338749241812788684),
+  [combo_event_5665114857339594269] = COMBO_ACTION(combo_array_5665114857339594269),
+  [combo_event_4184873831467278278] = COMBO_ACTION(combo_array_4184873831467278278),
+  [combo_event_3117976321307144644] = COMBO_ACTION(combo_array_3117976321307144644),
+  [combo_event_4235557754533728324] = COMBO_ACTION(combo_array_4235557754533728324),
+  [combo_event_3603478089481758952] = COMBO_ACTION(combo_array_3603478089481758952),
+  [combo_event_5398385701082147783] = COMBO_ACTION(combo_array_5398385701082147783),
+  [combo_event_7054801745581390725] = COMBO_ACTION(combo_array_7054801745581390725),
+  [combo_event_2007665748127160205] = COMBO_ACTION(combo_array_2007665748127160205),
+  [combo_event_4345812965115843518] = COMBO_ACTION(combo_array_4345812965115843518),
+  [combo_event_8457396452813239558] = COMBO_ACTION(combo_array_8457396452813239558),
+  [combo_event_3569972357894864960] = COMBO_ACTION(combo_array_3569972357894864960),
   
 };
 void process_combo_event(uint8_t combo_index, bool pressed) {
   if (layer_state & (1 << CYRILLIC)) {
     switch (combo_index) {
-      case combo_event_2900209085426453175: {
+      case combo_event_2903428668459347535: {
         if (pressed) {
   tap_code16(RU_TS);
 
 }
 return;
 }
-    case combo_event_5450569932287936653: {
+    case combo_event_2335615001108868936: {
         if (pressed) {
   tap_code16(RU_F);
 
 }
 return;
 }
-    case combo_event_5671676338627087710: {
+    case combo_event_1758195893935248580: {
         if (pressed) {
   tap_code16(RU_SH);
 
 }
 return;
 }
-    case combo_event_5841879690931198959: {
+    case combo_event_3353337648065483167: {
         if (pressed) {
   tap_code16(RU_SHCH);
 
 }
 return;
 }
-    case combo_event_5540135680286548709: {
+    case combo_event_4995448397753489606: {
         if (pressed) {
   tap_code16(RU_JU);
 
 }
 return;
 }
-    case combo_event_4494668746445220460: {
-        if (pressed) {
-  tap_code16(RU_E);
-
-}
-return;
-}
-    case combo_event_5736892998123766717: {
+    case combo_event_3300096067910844091: {
         if (pressed) {
   tap_code16(KC_GRAVE);
 
 }
 return;
 }
-    case combo_event_2454073383096629036: {
+    case combo_event_1717179187651220255: {
         if (pressed) {
   tap_code16(RU_JO);
 
 }
 return;
 }
-    case combo_event_4895441227728428339: {
-        if (pressed) {
-  tap_code16(RU_ZH);
-
-}
-return;
-}
-    case combo_event_7424424437480124040: {
+    case combo_event_3743771488396639216: {
         if (pressed) {
   tap_code16(RU_HARD);
 
 }
 return;
 }
-    case combo_event_4040581756291048260: {
+    case combo_event_255500310876116019: {
         if (pressed) {
   tap_code16(KC_EQUAL);
 
 }
 return;
 }
-    case combo_event_3438261748228321472: {
+    case combo_event_6038620050227370686: {
         if (pressed) {
   tap_code16(KC_BSLS);
 
 }
 return;
 }
-    case combo_event_4574713174501357403: {
+    case combo_event_2100497576748425420: {
         if (pressed) {
   spr(1)
 }
 return;
 }
-    case combo_event_5172565213032231929: {
+    case combo_event_8106211181296241986: {
         if (pressed) {
   spr(EQUAL)
 }
 return;
 }
-    case combo_event_3898123808306202638: {
+    case combo_event_4768562160614748010: {
         if (pressed) {
   spr(8)
 }
 return;
 }
-    case combo_event_5255048527561572636: {
+    case combo_event_3224855391667276352: {
         if (pressed) {
   spr(5)
 }
 return;
 }
-    case combo_event_4200577150548607152: {
+    case combo_event_3472043718410196765: {
         if (pressed) {
   spr(MINS)
 }
 return;
 }
-    case combo_event_6506004595546901508: {
-        if (pressed) {
-  RC8(LSFT); apr(MINS); UC8(LSFT);
-}
-return;
-}
-    case combo_event_7827324316328300267: {
+    case combo_event_4761317996638153031: {
         if (pressed) {
   spr(7)
 }
 return;
 }
-    case combo_event_6663400246912871762: {
+    case combo_event_5104470024272084248: {
         if (pressed) {
   spr(BSLS)
 }
 return;
 }
-    case combo_event_4864669520785935895: {
+    case combo_event_6539179470831365724: {
         if (pressed) {
   spr(6)
-}
-return;
-}
-    case combo_event_4046384311586950563: {
-        if (pressed) {
-  spr(2)
-}
-return;
-}
-    case combo_event_4303653378879804836: {
-        if (pressed) {
-  apr(RBRC)
-}
-return;
-}
-    case combo_event_6011575887049021526: {
-        if (pressed) {
-  RC8(LSFT); apr(RBRC); UC8(LSFT);
 }
 return;
 }
@@ -446,197 +353,166 @@ return;
 }
  else if (1) {
     switch (combo_index) {
-      case combo_event_3360597829741488991: {
+      case combo_event_1312945295595722832: {
         if (pressed) {
   tap_code16(KC_Q);
 
 }
 return;
 }
-    case combo_event_4681051653161381570: {
+    case combo_event_6800437215127306157: {
         if (pressed) {
-  tap_code16(KC_J);
+  tap_code16(KC_X);
 
 }
 return;
 }
-    case combo_event_3437112391670736347: {
+    case combo_event_4341985291761933337: {
         if (pressed) {
   spr(COMM)
 }
 return;
 }
-    case combo_event_4031057562054992194: {
-        if (pressed) {
-  apr(RBRC)
-}
-return;
-}
-    case combo_event_1596072110637648876: {
+    case combo_event_4906069351709551203: {
         if (pressed) {
   tap_code16(KC_LBRC);
 
 }
 return;
 }
-    case combo_event_4241925233166793250: {
+    case combo_event_2648206544723721230: {
         if (pressed) {
   spr(LBRC)
 }
 return;
 }
-    case combo_event_6937303351329705487: {
+    case combo_event_1203198324969893324: {
         if (pressed) {
   spr(RBRC)
 }
 return;
 }
-    case combo_event_5060629599034371665: {
+    case combo_event_7744491230964201243: {
         if (pressed) {
   tap_code16(KC_RBRC);
 
 }
 return;
 }
-    case combo_event_4764937885664687957: {
-        if (pressed) {
-  RC8(LSFT); apr(RBRC); UC8(LSFT);
-}
-return;
-}
-    case combo_event_6726621926677520290: {
+    case combo_event_7048612701999671293: {
         if (pressed) {
   spr(DOT)
 }
 return;
 }
-    case combo_event_5342828691337311291: {
+    case combo_event_2402939494229388692: {
         if (pressed) {
   spr(2)
 }
 return;
 }
-    case combo_event_5409118428755652335: {
+    case combo_event_4879238000955844223: {
         if (pressed) {
   spr(3)
 }
 return;
 }
-    case combo_event_5907918408545251243: {
+    case combo_event_6022806290775585872: {
         if (pressed) {
   spr(4)
 }
 return;
 }
-    case combo_event_7724581494155652439: {
+    case combo_event_3351334440585536920: {
         if (pressed) {
   spr(7)
 }
 return;
 }
-    case combo_event_2741627665048618493: {
+    case combo_event_3346175091820902919: {
         if (pressed) {
   spr(8)
 }
 return;
 }
-    case combo_event_4293538879439444099: {
+    case combo_event_6398914094340340164: {
         if (pressed) {
   spr(EQUAL)
 }
 return;
 }
-    case combo_event_7085428533108454221: {
+    case combo_event_5338749241812788684: {
         if (pressed) {
   tap_code16(KC_SLSH);
 
 }
 return;
 }
-    case combo_event_6742304218490885006: {
+    case combo_event_5665114857339594269: {
         if (pressed) {
   tap_code16(KC_BSLS);
 
 }
 return;
 }
-    case combo_event_4810581455825905250: {
+    case combo_event_4184873831467278278: {
         if (pressed) {
   spr(SLSH)
 }
 return;
 }
-    case combo_event_2850590819946296010: {
+    case combo_event_3117976321307144644: {
         if (pressed) {
   spr(1)
 }
 return;
 }
-    case combo_event_5301462043032874118: {
+    case combo_event_4235557754533728324: {
         if (pressed) {
   spr(6)
 }
 return;
 }
-    case combo_event_8977585948973148278: {
+    case combo_event_3603478089481758952: {
         if (pressed) {
   spr(BSLS)
 }
 return;
 }
-    case combo_event_5571058296813207174: {
-        if (pressed) {
-  RC8(LSFT); apr(MINS); UC8(LSFT);
-}
-return;
-}
-    case combo_event_5327796417291827053: {
+    case combo_event_5398385701082147783: {
         if (pressed) {
   spr(GRAVE)
 }
 return;
 }
-    case combo_event_7227483005584079023: {
+    case combo_event_7054801745581390725: {
         if (pressed) {
   tap_code16(KC_GRAVE);
 
 }
 return;
 }
-    case combo_event_7328648489149772307: {
+    case combo_event_2007665748127160205: {
         if (pressed) {
   spr(MINS)
 }
 return;
 }
-    case combo_event_4256359822000941831: {
+    case combo_event_4345812965115843518: {
         if (pressed) {
   spr(5)
 }
 return;
 }
-    case combo_event_4847294540635313794: {
+    case combo_event_8457396452813239558: {
         if (pressed) {
   spr(SCOLON)
 }
 return;
 }
-    case combo_event_1921776302051919863: {
+    case combo_event_3569972357894864960: {
         if (pressed) {
   tap_code16(KC_EQUAL);
-
-}
-return;
-}
-    case combo_event_4354786550664561654: {
-        if (pressed) {
-  spr(QUOT)
-}
-return;
-}
-    case combo_event_5176604073201047627: {
-        if (pressed) {
-  tap_code16(KC_QUOT);
 
 }
 return;
