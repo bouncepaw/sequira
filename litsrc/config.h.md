@@ -11,7 +11,7 @@
 
 - `VENDOR_ID       0xFEED`
 - `PRODUCT_ID      0xBEEF`
-- `DEVICE_VER      0x0004`
+- `DEVICE_VER      0x0005`
   I increment this value after any serious change to the code.
 - `MANUFACTURER    Bouncepaw`
 - `PRODUCT         Sequira`
@@ -43,7 +43,7 @@ I have no idea what they do.
   Mechanical locking support. Use `KC_LCAP`, `KC_LNUM` or `KC_LSCR` instead in keymap.
 - `LOCKING_RESYNC_ENABLE`
   Locking resynchronize hack.
-- `COMBO_COUNT 40`
+- `COMBO_COUNT 22`
   Number of chords user. Check with `ruby chordgen.rb --count-chords`.
 
 ```c

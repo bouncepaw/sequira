@@ -4,7 +4,7 @@
 #include "config_common.h"
 #define VENDOR_ID       0xFEED
 #define PRODUCT_ID      0xBEEF
-#define DEVICE_VER      0x0004
+#define DEVICE_VER      0x0005
 #define MANUFACTURER    Bouncepaw
 #define PRODUCT         Sequira
 #define DESCRIPTION     Ergonomic semichorded split keyboard
@@ -18,5 +18,5 @@
 #define DEBOUNCING_DELAY 5
 #define LOCKING_SUPPORT_ENABLE
 #define LOCKING_RESYNC_ENABLE
-#define COMBO_COUNT 40
+#define COMBO_COUNT 22
 #endif
