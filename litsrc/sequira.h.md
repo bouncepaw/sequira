@@ -23,8 +23,12 @@ it may change later.
   Navigation and numbers.
 - `SUN 3`
   Mouse and F-keys.
+- `ASTRA 4`
+  Punctuation, etc. Typeable in any of the two languages.
 
 ## enum custom_key
+
+The following are layermode keys.
 
 - `CYR_LAT = SAFE_RANGE`
   Change layout on both keyboard and computer.
@@ -44,6 +48,30 @@ it may change later.
   Just a `Right Alt/Option` key.
 - `PHOTO`
   Momentary toggle `Moon` layer and `Super` along with `Shift`.
+
+The following keys are from `Astra` layer.
+
+- `AGUILL`
+- `AEMOT`
+  These are for writing guill-emots «». They depend on Compose key configured on computer like that: `Compose, <, <` → `«`, `Compose, >, >` → `»`. The Compose key must be mapped to ScrollLock.
+- `AMDASH`
+  Long dash — written with three hyphens.
+- `APIPE`
+- `ACIRC`
+- `AGRAVE`
+- `AATDOG`
+- `AHASH`
+- `ATILDE`
+- `ADOLLAR`
+- `AAMP`
+- `ASHCH`
+- `AJO`
+- `AJU`
+- `ASH`
+
+The following key is used to toggle `ASTRA` layer, because on ЙЦУКЕН comma is typed with shift key pressed.
+
+- `ASTRARUS`
 
 ## QMK Bonus imports
 

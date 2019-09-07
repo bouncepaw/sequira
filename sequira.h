@@ -5,6 +5,7 @@
 #define CYRILLIC 1
 #define MOON 2
 #define SUN 3
+#define ASTRA 4
 enum custom_key {
     CYR_LAT = SAFE_RANGE,
     MUN_BRA,
@@ -14,7 +15,23 @@ enum custom_key {
     CTL_SPC,
     CMD_DEL,
     ROPT,
-    PHOTO
+    PHOTO,
+    AGUILL,
+    AEMOT,
+    AMDASH,
+    APIPE,
+    ACIRC,
+    AGRAVE,
+    AATDOG,
+    AHASH,
+    ATILDE,
+    ADOLLAR,
+    AAMP,
+    ASHCH,
+    AJO,
+    AJU,
+    ASH,
+    ASTRARUS,
 } ;
 #include "rusmap.h"
 #define HALF(k10, k11, k12, k13, k14, k15, k20, k21, k22, k23, k24, k25, k30, k31, k32, k33, k34, k35, k40, k41, k42, k43, k44, k45)\

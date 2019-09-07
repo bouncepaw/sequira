@@ -21,7 +21,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
    [LATIN] =
    {
     HALFL(KC_DQUO, KC_Z, KC_P, KC_R, KC_D, KC_Q,
-          KC_H,    KC_S, KC_T, KC_N, KC_COMM,
+          KC_H,    KC_S, KC_T, KC_N, LT(ASTRA, KC_COMM),
           KC_Y,    KC_K, KC_M, KC_C, KC_MINS),
     HALFR(KC_X,    KC_F, KC_W, KC_U, KC_J, KC_QUOT,
           KC_E,    KC_O, KC_I, KC_L, KC_DOT,
@@ -30,7 +30,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
    [CYRILLIC] =
    {
     HALFL(RU_ZH, RU_CH, RU_P,  RU_R, RU_D, RU_F,
-          RU_V, RU_S,  RU_T, RU_N, RU_COMM,
+          RU_V, RU_S,  RU_T, RU_N, ASTRARUS,
           RU_J, RU_Z, RU_M, RU_K, RU_MINUS),
     HALFR(RU_TS, RU_SOFT, RU_JA, RU_U, RU_H, RU_E,
           RU_JE, RU_O, RU_I, RU_L, RU_DOT,
@@ -54,6 +54,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
           KC_MS_L,    KC_MS_D, KC_MS_R, KC_WH_U, LCTL(KC_Z),
           KC_VOLD,    KC_MUTE, KC_VOLU, KC_WH_D, LSFT(KC_Y))
    },
+   [ASTRA] =
+   {
+     HALFL(KC_TRNS, KC_TRNS, KC_TRNS, AGUILL, AEMOT, KC_TRNS,
+	   APIPE, ACIRC, AMDASH, AGRAVE, ASTRA,
+	   KC_TRNS, KC_TRNS,KC_TRNS,KC_TRNS, AATDOG),
+     HALFR(KC_TRNS, AHASH, KC_PLUS, ATILDE, KC_TRNS, KC_TRNS,
+	   ASHCH, AJU, ADOLLAR, AAMP, KC_ASTR,
+	   AJO, ASH, KC_PERC, KC_TRNS, KC_TRNS)
+   }
   };
 ```
 
@@ -89,6 +98,26 @@ switch (language_switch_type) {
 }
 ```
 
+### defmacro ASTRAMATCH
+
+- `ck`
+- `typed_on_qwerty`
+- `kc`
+
+```c
+case ck:
+  if (record->event.pressed) {
+    bool should_toggle_back = false;
+    if (layer_state & _BV(CYRILLIC) && typed_on_qwerty) {
+      toggle_language();
+      should_toggle_back = true;
+    }
+    tap_code16(kc);
+    if (should_toggle_back) toggle_language();
+  }
+return false;
+```
+
 ## Record processing
 
 ### fn process_record_user
@@ -105,6 +134,7 @@ KEYTIMER(CTL_SPC);
 KEYTIMER(CMD_DEL);
 KEYTIMER(ROPT);
 KEYTIMER(PHOTO);
+KEYTIMER(ASTRARUS);
 
 switch (keycode) {
   KEYMATCH(PHOTO,   _BV(MOON),     false, MOD_LSFT | MOD_LGUI, KC_NO);
@@ -120,6 +150,46 @@ switch (keycode) {
 case CYR_LAT:
   if (record->event.pressed) toggle_language();
   return false;
+
+  /* ЙЦУКЕН Astra key */
+  KEYMATCH(ASTRARUS, _BV(ASTRA), false, 0, RU_COMM);
+
+  /* Astra keys that depend on installed layouts */
+  ASTRAMATCH(APIPE, true, KC_PIPE);
+  ASTRAMATCH(ACIRC, true, KC_CIRC);
+  ASTRAMATCH(AGRAVE, true, KC_GRAVE);
+  ASTRAMATCH(AATDOG, true, KC_AT);
+  ASTRAMATCH(AHASH, true, KC_HASH);
+  ASTRAMATCH(ATILDE, true, KC_TILDE);
+  ASTRAMATCH(ADOLLAR, true, KC_DOLLAR);
+  ASTRAMATCH(AAMP, true, KC_AMPR);
+  ASTRAMATCH(ASHCH, false, RU_SHCH);
+  ASTRAMATCH(AJU, false, RU_JU);
+  ASTRAMATCH(AJO, false, RU_JO);
+  ASTRAMATCH(ASH, false, RU_SH);
+
+  /* Astra keys that depend on Compose key */
+case AGUILL:
+  if (record->event.pressed) {
+    tap_code16(KC_SLCK);
+    tap_code16(KC_LT);
+    tap_code16(KC_LT);
+  }
+  return false;
+case AEMOT:
+  if (record->event.pressed) {
+    tap_code16(KC_SLCK);
+    tap_code16(KC_GT);
+    tap_code16(KC_GT);
+  }
+  return false;
+case AMDASH:
+  if (record->event.pressed) {
+    tap_code16(KC_SLCK);
+    tap_code16(KC_MINS);
+    tap_code16(KC_MINS);
+    tap_code16(KC_MINS);
+  }
 }
 return true;
 ```
