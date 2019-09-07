@@ -8,7 +8,6 @@ it may change later.
 #pragma once
 
 #include "quantum.h"
-#include "rusmap.h"
 ```
 
 ## defconst Keyboard layers
@@ -45,6 +44,12 @@ it may change later.
   Just a `Right Alt/Option` key.
 - `PHOTO`
   Momentary toggle `Moon` layer and `Super` along with `Shift`.
+
+## QMK Bonus imports
+
+```c
+#include "rusmap.h"
+```
 
 ## Layout macros
 

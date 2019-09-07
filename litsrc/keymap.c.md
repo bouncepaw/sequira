@@ -2,6 +2,7 @@
 
 ```c
 #include QMK_KEYBOARD_H
+#include "layermode.h"
 
 // TODO. Get rid of this.
 #define RC8(mod) register_code(KC_##mod)
@@ -20,11 +21,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
    [LATIN] =
    {
     HALFL(KC_DQUO, KC_Z, KC_P, KC_R, KC_D, KC_Q,
-          KC_H, KC_S, KC_T, KC_N, KC_COMM,
-          KC_Y, KC_K, KC_M, KC_C, KC_MINS),
-    HALFR(KC_X, KC_F, KC_W, KC_U, KC_J, KC_QUOT,
-          KC_E, KC_O, KC_I, KC_L, KC_DOT,
-          KC_A, KC_V, KC_B, KC_G, KC_SCLN)
+          KC_H,    KC_S, KC_T, KC_N, KC_COMM,
+          KC_Y,    KC_K, KC_M, KC_C, KC_MINS),
+    HALFR(KC_X,    KC_F, KC_W, KC_U, KC_J, KC_QUOT,
+          KC_E,    KC_O, KC_I, KC_L, KC_DOT,
+          KC_A,    KC_V, KC_B, KC_G, KC_SCLN)
    },
    [CYRILLIC] =
    {
@@ -56,134 +57,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
   };
 ```
 
-## Custom modifier processing
-
-### fn mod_router
-> void
-
-- `bool registering`
-- `uint8_t modmask`
-
-Handle custom modifiers.
-
-```c
-static bool any_mods_active = false;
-static bool was_cyrillic_active = false;
-
-if (registering) {
-  // If it the first mod pressed.
-  if (!any_mods_active) {
-    any_mods_active = true;
-    was_cyrillic_active = layer_state & (1 << CYRILLIC);
-    layer_off(CYRILLIC);
-  }
-  // Anyway, the pressed mod shall be registered.
-  register_code(modmask);
-}
-else {
-  // Depress the mod.
-  unregister_code(modmask);
-  // If it was the last mod, rewind to previous state.
-  if (!(get_mods() &~ (MOD_LSFT | MOD_RSFT))) {
-    any_mods_active = false;
-    if (was_cyrillic_active) layer_on(CYRILLIC);
-  }
-}
-```
-
-### fn process_custom_mod
-> void
-
-- `enum custom_key ck`
-  Custom keycode. See [sequira.h.md](sequira.h.md).
-- `uint16_t *timer`
-  Pointer to its timer.
-- `keyrecord_t *record`
-- `uint8_t modmask_for_hold`
-  What mod to register if held.
-- `uint8_t kc`
-  What keycode to register if tapped.
-
-```c
-if (record->event.pressed) {
-  *timer = timer_read();
-  mod_router(true, modmask_for_hold);
-}
-else {
-  mod_router(false, modmask_for_hold);
-  if (timer_elapsed(*timer) < MODTAP_TERM)
-    tap_code( kc);
-}
-```
-
-### defmacro KEYMOD
-
-Makes working with `process_custom_mod` easier. Meant to be embedded in `process_record_user`.
-
-- `name, modhold, kc`
-
-```c
-case name:
-process_custom_mod(name, &timer_##name, record,
-                   KC_##modhold, KC_##kc);
-return false
-```
-
-## Layer processing
-
-### fn process_custom_layer
-> void
-
-- `enum custom_key ck`
-  Custom keycode. See [sequira.h.md](sequira.h.md).
-- `uint16_t *timer`
-  Pointer to its timer.
-- `keyrecord_t *record`
-- `layer_state_t layer`
-  What layer to enter if held.
-- `uint8_t kc`
-  What keycode to register if tapped.
-
-```c
-if (record->event.pressed) {
-  *timer = timer_read();
-  layer_on(layer);
-}
-else {
-  layer_off(layer);
-  if (timer_elapsed(*timer) < MODTAP_TERM) {
-    register_code(modmask_for_kc);
-    tap_code(kc);
-    unregister_code(modmask_for_kc);
-  }
-}
-```
-
-### defmacro KEYLAYER
-
-Like `KEYMOD`, but for layers.
-
-- `name, layer, modpress, kc`
-
-```c
-case name: {
-  process_custom_layer(name, &timer_##name, record,
-                       layer, KC_##modpress, KC_##kc);
-}
-return false
-```
-
 ## Record processing
-
-### defmacro KEYTIMER
-
-Define a timer for a custom keycode.
-
-- `name`
-
-```c
-static uint16_t timer_##name
-```
 
 ### fn process_record_user
 > bool
@@ -198,8 +72,17 @@ KEYTIMER(ALT_TAB);
 KEYTIMER(CTL_SPC);
 KEYTIMER(CMD_DEL);
 KEYTIMER(ROPT);
+KEYTIMER(PHOTO);
 
 switch (keycode) {
+  KEYMATCH(PHOTO,   _BV(MOON),     false, MOD_LSFT | MOD_LGUI, KC_NO);
+  KEYMATCH(MUN_BRA, _BV(MOON),     false, 0,                   LSFT(KC_9));
+  KEYMATCH(SUN_KET, _BV(SUN),      false, 0,                   LSFT(KC_0));
+  KEYMATCH(LCMD,    _BV(CYRILLIC), true,  MOD_LGUI,            KC_NO);
+  KEYMATCH(ROPT,    _BV(CYRILLIC), true,  MOD_RALT,            KC_NO);
+  KEYMATCH(ALT_TAB, _BV(CYRILLIC), true,  MOD_LALT,            KC_TAB);
+  KEYMATCH(CTL_SPC, _BV(CYRILLIC), true,  MOD_RCTL,            KC_SPC);
+  KEYMATCH(CMD_DEL, _BV(CYRILLIC), true,  MOD_RGUI,            KC_DEL);
 
   /* CYR_LAT toggles CYRILLIC layer on tap. */
 case CYR_LAT:
@@ -208,35 +91,6 @@ case CYR_LAT:
     tap_code(KC_CAPS);
   }
   return false;
-
-  /* On macOS, screenshots are with ⌘⇧n where n is a number. PHOTO
-     key toggles the mods on hold. */
-case PHOTO:
-  if (record->event.pressed) {
-    layer_on(MOON);
-    register_code(KC_LGUI);
-    register_code(KC_LSFT);
-  } else {
-    layer_off(MOON);
-    unregister_code(KC_LGUI);
-    unregister_code(KC_LSFT);
-  }
-  return false;
-
-  /* MUN_BRA toggles MOON layer or writes left bracket.
-     SUN_KET toggles SUN layer or writes right bracket. */
-  KEYLAYER(MUN_BRA, MOON, LSFT, 9);
-  KEYLAYER(SUN_KET, SUN,  LSFT, 0);
-
-  /* Double keys trigger the LATIN layer and a mod when held or send
-   * smth when tapped.
-   *     key      mod   smth
-   */
-  KEYMOD(LCMD,    LGUI, NO);
-  KEYMOD(ROPT,    RALT, NO);
-  KEYMOD(ALT_TAB, LALT, TAB);
-  KEYMOD(CTL_SPC, RCTL, SPC);
-  KEYMOD(CMD_DEL, RGUI, DEL);
 }
 return true;
 ```
