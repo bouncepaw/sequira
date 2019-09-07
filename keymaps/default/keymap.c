@@ -49,6 +49,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
           KC_VOLD,    KC_MUTE, KC_VOLU, KC_WH_D, LSFT(KC_Y))
    },
   };
+// Will be used later. For now, it does barely nothing.
+enum LanguageSwitchType {
+  LS_CTRL_SHIFT,
+  LS_ALT_SHIFT,
+  LS_CTRL_SPACE,
+  LS_CAPS_LOCK,
+} language_switch_type = LS_CAPS_LOCK;
+void
+
+toggle_language(void){
+layer_invert(CYRILLIC);
+switch (language_switch_type) {
+  case LS_CTRL_SHIFT:
+  case LS_ALT_SHIFT:
+  case LS_CTRL_SPACE:
+  case LS_CAPS_LOCK:
+    tap_code(KC_CAPS);
+}
+
+}
 bool
 
 process_record_user(uint16_t keycode, keyrecord_t *record){
@@ -73,10 +93,7 @@ switch (keycode) {
 
   /* CYR_LAT toggles CYRILLIC layer on tap. */
 case CYR_LAT:
-  if (record->event.pressed) {
-    layer_invert(CYRILLIC);
-    tap_code(KC_CAPS);
-  }
+  if (record->event.pressed) toggle_language();
   return false;
 }
 return true;
