@@ -108,10 +108,10 @@ switch (keycode) {
   KEYMATCH(MUN_BRA, _BV(MOON),     false, 0,                   LSFT(KC_9));
   KEYMATCH(SUN_KET, _BV(SUN),      false, 0,                   LSFT(KC_0));
   KEYMATCH(LCMD,    _BV(CYRILLIC), true,  MOD_LGUI,            KC_NO);
-  KEYMATCH(ROPT,    _BV(CYRILLIC), true,  MOD_RALT,            KC_NO);
+  KEYMATCH(ROPT,    _BV(CYRILLIC), true,  MOD_BIT(KC_RALT),    KC_NO);
   KEYMATCH(ALT_TAB, _BV(CYRILLIC), true,  MOD_LALT,            KC_TAB);
   KEYMATCH(CTL_SPC, _BV(CYRILLIC), true,  MOD_RCTL,            KC_SPC);
-  KEYMATCH(CMD_DEL, _BV(CYRILLIC), true,  MOD_RGUI,            KC_DEL);
+  KEYMATCH(CMD_DEL, _BV(CYRILLIC), true,  MOD_BIT(KC_RGUI),    KC_DEL);
 
   /* CYR_LAT toggles CYRILLIC layer on tap. */
 case CYR_LAT:

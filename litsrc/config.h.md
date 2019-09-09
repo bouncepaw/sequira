@@ -30,14 +30,12 @@ See [Sparkfun docs](https://learn.sparkfun.com/tutorials/pro-micro--fio-v3-hooku
 
 ## defconst Time delays
 
-- `TAPPING_TERM 300`
-- `MODTAP_TERM 300`
+- `TAPPING_TERM 200`
+- `MODTAP_TERM 200`
   Used with custom modifiers.
 - `DEBOUNCING_DELAY 5`
 
 ## defconst Others
-
-I have no idea what they do.
 
 - `LOCKING_SUPPORT_ENABLE`
   Mechanical locking support. Use `KC_LCAP`, `KC_LNUM` or `KC_LSCR` instead in keymap.
