@@ -16,6 +16,7 @@ enum custom_key {
     CMD_DEL,
     ROPT,
     PHOTO,
+    PHOTOMOD,
     AGUILL,
     AEMOT,
     AMDASH,

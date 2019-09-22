@@ -32,7 +32,7 @@ get_bonus:
 
 gen_chords:
 	@echo "Chord count: `ruby chordgen.rb --count-chords`"
-	ruby chordgen.rb > keymaps/default/chords.h
+	ruby -Ku chordgen.rb > keymaps/default/chords.h
 	@echo "Generated chords"
 
 flash: weave gen_chords

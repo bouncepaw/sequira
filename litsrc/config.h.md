@@ -30,8 +30,8 @@ See [Sparkfun docs](https://learn.sparkfun.com/tutorials/pro-micro--fio-v3-hooku
 
 ## defconst Time delays
 
-- `TAPPING_TERM 200`
-- `MODTAP_TERM 200`
+- `TAPPING_TERM 150`
+- `MODTAP_TERM 150`
   Used with custom modifiers.
 - `DEBOUNCING_DELAY 5`
 
@@ -41,7 +41,7 @@ See [Sparkfun docs](https://learn.sparkfun.com/tutorials/pro-micro--fio-v3-hooku
   Mechanical locking support. Use `KC_LCAP`, `KC_LNUM` or `KC_LSCR` instead in keymap.
 - `LOCKING_RESYNC_ENABLE`
   Locking resynchronize hack.
-- `COMBO_COUNT 22`
+- `COMBO_COUNT 26`
   Number of chords user. Check with `ruby chordgen.rb --count-chords`.
 
 ```c

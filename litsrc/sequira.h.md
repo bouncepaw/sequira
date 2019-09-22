@@ -48,6 +48,7 @@ The following are layermode keys.
   Just a `Right Alt/Option` key.
 - `PHOTO`
   Momentary toggle `Moon` layer and `Super` along with `Shift`.
+- `PHOTOMOD`
 
 The following keys are from `Astra` layer.
 

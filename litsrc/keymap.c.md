@@ -56,12 +56,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
    },
    [ASTRA] =
    {
-     HALFL(KC_TRNS, KC_TRNS, KC_TRNS, AGUILL, AEMOT, KC_TRNS,
-	   APIPE, ACIRC, AMDASH, AGRAVE, ASTRA,
-	   KC_TRNS, KC_TRNS,KC_TRNS,KC_TRNS, AATDOG),
-     HALFR(KC_TRNS, AHASH, KC_PLUS, ATILDE, KC_TRNS, KC_TRNS,
-	   ASHCH, AJU, ADOLLAR, AAMP, KC_ASTR,
-	   AJO, ASH, KC_PERC, KC_TRNS, KC_TRNS)
+     HALFL(KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+	   APIPE,   KC_TRNS, AMDASH,  AGRAVE,  ASTRA,
+	   KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, AATDOG),
+     HALFR(KC_TRNS, AAMP,    KC_PLUS, KC_TRNS, KC_TRNS, KC_TRNS,
+	   AHASH,   ATILDE,  ADOLLAR, ACIRC,   KC_ASTR,
+	   AGUILL,  AEMOT,   KC_PERC, KC_TRNS, KC_TRNS)
    }
   };
 ```
@@ -137,18 +137,30 @@ KEYTIMER(PHOTO);
 KEYTIMER(ASTRARUS);
 
 switch (keycode) {
-  KEYMATCH(PHOTO,   _BV(MOON),     false, MOD_LSFT | MOD_LGUI, KC_NO);
-  KEYMATCH(MUN_BRA, _BV(MOON),     false, 0,                   LSFT(KC_9));
-  KEYMATCH(SUN_KET, _BV(SUN),      false, 0,                   LSFT(KC_0));
-  KEYMATCH(LCMD,    _BV(CYRILLIC), true,  MOD_LGUI,            KC_NO);
-  KEYMATCH(ROPT,    _BV(CYRILLIC), true,  MOD_BIT(KC_RALT),    KC_NO);
-  KEYMATCH(ALT_TAB, _BV(CYRILLIC), true,  MOD_LALT,            KC_TAB);
-  KEYMATCH(CTL_SPC, _BV(CYRILLIC), true,  MOD_RCTL,            KC_SPC);
-  KEYMATCH(CMD_DEL, _BV(CYRILLIC), true,  MOD_BIT(KC_RGUI),    KC_DEL);
+  KEYMATCH(PHOTO,   _BV(MOON),     false, PHOTOMOD, KC_NO);
+  KEYMATCH(MUN_BRA, _BV(MOON),     false, 0,        LSFT(KC_9));
+  KEYMATCH(SUN_KET, _BV(SUN),      false, 0,        LSFT(KC_0));
+  KEYMATCH(LCMD,    _BV(CYRILLIC), true,  KC_LGUI,  KC_NO);
+  KEYMATCH(ROPT,    _BV(CYRILLIC), true,  KC_RALT,  KC_NO);
+  KEYMATCH(ALT_TAB, _BV(CYRILLIC), true,  KC_LALT,  KC_TAB);
+  KEYMATCH(CTL_SPC, _BV(CYRILLIC), true,  KC_RCTL,  KC_SPC);
+  KEYMATCH(CMD_DEL, _BV(CYRILLIC), true,  KC_RGUI,  KC_DEL);
 
   /* CYR_LAT toggles CYRILLIC layer on tap. */
 case CYR_LAT:
   if (record->event.pressed) toggle_language();
+  return false;
+
+  /* This is like KC_LGUI and KC_LSFT, but in one key */
+case PHOTOMOD:
+  if (record->event.pressed) {
+    register_code(KC_LGUI);
+    register_code(KC_LSFT);
+  }
+  else {
+    unregister_code(KC_LGUI);
+    unregister_code(KC_LSFT);
+  }
   return false;
 
   /* ЙЦУКЕН Astra key */
